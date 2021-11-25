@@ -9,15 +9,15 @@ import PublicRoute from "./routs/PublicRoute";
 function App() {
     return (
         <>
-            <PrivateRoute path="/">
-                <Chat/>
-            </PrivateRoute>
             <PublicRoute path="/signin">
                 <Signin/>
             </PublicRoute>
             <PublicRoute path="/signup">
                 <Signup/>
             </PublicRoute>
+            {/*<PrivateRoute path="/">
+                <Chat/>
+            </PrivateRoute>*/}
         </>
     );
 }
