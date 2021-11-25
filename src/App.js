@@ -15,9 +15,9 @@ function App() {
             <PublicRoute path="/signup">
                 <Signup/>
             </PublicRoute>
-            {/*<PrivateRoute path="/">
+            <PrivateRoute path="/" exact="">
                 <Chat/>
-            </PrivateRoute>*/}
+            </PrivateRoute>
         </>
     );
 }
