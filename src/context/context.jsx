@@ -12,8 +12,10 @@ export const ChatProvider = ({children, authUser}) => {
     const [chatConfig, setChatConfig] = useState(null);
     const [myChats, setMyChats] = useState(null);
 
+
+
     useEffect(() => {
-        if (authUser) { /*user.loggedIn === true*/
+        if (authUser) {
             onSnapshot(doc(fb.firestore, 'chat', `${authUser.uid}`), (doc) => {
                 setChatConfig({
                     userSecret: authUser.uid,
@@ -30,6 +32,7 @@ export const ChatProvider = ({children, authUser}) => {
             value={{
                 chatConfig,
                 setMyChats,
+                myChats
             }}
         >
             {children}
@@ -41,11 +44,13 @@ export const useChat = () => {
     const {
         chatConfig,
         setMyChats,
+        myChats
     } = useContext(ChatContext);
 
     return {
         chatConfig,
         setMyChats,
+        myChats
     };
 };
 
