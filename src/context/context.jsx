@@ -1,18 +1,120 @@
-import React,{useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {fb} from "../firebase";
-import { doc, onSnapshot } from "firebase/firestore";
-
-
+import {doc, onSnapshot} from "firebase/firestore";
+import {chatApi} from "../api/api";
+import {getChats} from "react-chat-engine";
+import moment from 'moment';
 
 
 export const ChatContext = React.createContext();
 
 export const ChatProvider = ({children, authUser}) => {
-
     const [chatConfig, setChatConfig] = useState(null);
     const [myChats, setMyChats] = useState(null);
+    const [selectedChat, setSelectedChat] = useState(null);
+    const [typing, setTyping] = useState([]);
+    const [membersTyping, setMembersTyping] = useState([]);
+    const [isFetching, setFetching] = useState(null);
+
+    const getMessages = async (chatData, page = 1) => {
+        setFetching(true);
+
+        let data = await chatApi.getLatestMessages(chatData.id, page * 15, chatConfig);
+        setSelectedChat({
+            chatData,
+            chatID: chatData.id,
+            messages: data,
+            currentPage: page,
+            hasMoreMessage: data.length === page * 15 ? true : false
+        });
+        setFetching(false);
+
+    };
+
+    const createNewChat = (chatData) => {
+        if (chatData.admin.username === chatConfig.userName) {
+            getChats(chatConfig, (chats) => {
+                /*getMessages(chatConfig, chatData.id, (chatID, messages) => {
+                    setMyChats(chats);
+                    setSelectedChat({
+                        chatData, chatID, messages
+                    });
+                });*/
+            })
+        } else {
+            getChats(chatConfig, setMyChats);
+        }
+    };
+
+    const deleteChat = (chat) => {
+        if (!!selectedChat) {
+            if (selectedChat.chatID === chat.id) {
+                getChats(chatConfig, (chats) => {
+                    setMyChats(chats);
+                    setSelectedChat(null);
+                })
+            } else {
+                getChats(chatConfig, setMyChats)
+            }
+        } else {
+            getChats(chatConfig, setMyChats)
+        }
+    };
+
+    const setMembers = (data) => {
+        !!selectedChat && data.id === selectedChat.chatID &&
+        setSelectedChat({
+            ...selectedChat, chatData: data
+        })
+    };
+
+    const setMemberIsTyping = (data) => {
+        if (!!selectedChat && data.chatId === selectedChat.chatID && data.username !== chatConfig.userName) {
+            typing.some(e => e.username === data.username)
+                ? setTyping(typing.map(e => {
+                    if (e.username === data.username && e.chatId === data.chatId) {
+                        return {...e, date: moment().format()}
+                    }
+                    return e;
+                }))
+                : setTyping([...typing, {...data, date: moment().format()}])
+        }
+    };
+    useEffect(() => {
+        setMembersTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
+        const deferredDelete = setTimeout(() => {
+            setMembersTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
+        }, 3000);
+        return () => {
+            clearTimeout(deferredDelete);
+        };
+    }, [typing]);
 
 
+    const newMessage = (data) => {
+        setMyChats(myChats.map(e => {
+            if (data.chatId === e.id) {
+                return {...e, last_message: data.message}
+            }
+            return e;
+        }));
+        if(!!selectedChat && data.chatId === selectedChat.chatID){
+            setTyping(typing.filter(member => member.username !== data.message.sender_username));
+            if(data.message.sender_username === chatConfig.userName){
+                setSelectedChat({...selectedChat,messages:selectedChat.messages.map(
+                        e => {
+                            if (!!e.status) {
+                                return {...data.message}
+                            }
+                            return e;
+                        }
+                    )})
+
+            }else{
+                setSelectedChat({...selectedChat,messages:[...selectedChat.messages,data.message]})
+            }
+        }
+    };
 
     useEffect(() => {
         if (authUser) {
@@ -30,9 +132,19 @@ export const ChatProvider = ({children, authUser}) => {
     return (
         <ChatContext.Provider
             value={{
+                setMemberIsTyping,
+                setMembers,
+                createNewChat,
+                deleteChat,
+                newMessage,
+                myChats,
                 chatConfig,
+                selectedChat,
+                getMessages,
                 setMyChats,
-                myChats
+                setSelectedChat,
+                membersTyping,
+                isFetching,
             }}
         >
             {children}
@@ -42,15 +154,35 @@ export const ChatProvider = ({children, authUser}) => {
 
 export const useChat = () => {
     const {
+        setMemberIsTyping,
+        setMembers,
+        createNewChat,
+        deleteChat,
+        newMessage,
+        myChats,
         chatConfig,
+        selectedChat,
+        getMessages,
         setMyChats,
-        myChats
+        setSelectedChat,
+        membersTyping,
+        isFetching,
     } = useContext(ChatContext);
 
     return {
+        setMemberIsTyping,
+        setMembers,
+        createNewChat,
+        deleteChat,
+        newMessage,
+        myChats,
         chatConfig,
+        selectedChat,
+        getMessages,
         setMyChats,
-        myChats
+        setSelectedChat,
+        membersTyping,
+        isFetching,
     };
 };
 
