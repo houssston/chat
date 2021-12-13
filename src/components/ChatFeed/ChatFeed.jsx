@@ -52,8 +52,8 @@ const ChatFeed = (props) => {
                     }}
                          className={style.chat_icon}>{selectedChat.chatData.title.substring(0, 1).toUpperCase()}</div>
                     <div>
-                        <div>{selectedChat.chatData.title}</div>
-                        <div>{selectedChat.chatData.people.length}members</div>
+                        <h3 className={style.title}>{selectedChat.chatData.title}</h3>
+                        <div className={style.status}>{selectedChat.chatData.people.length} members</div>
                     </div>
                 </div>
 

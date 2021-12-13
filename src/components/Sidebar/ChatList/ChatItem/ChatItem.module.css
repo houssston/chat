@@ -12,6 +12,9 @@
     background-color: #3390ec!important;
     color: #fff;
 }
+.container_active .tittle_details{
+    color: #fff;
+}
 .container__left{
     width: 54px;
     height: 54px;
@@ -19,6 +22,10 @@
 .container__right{
     flex: 1;
     padding: 0 7px 0 9px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .chatItemLogo{
     width: 100%;
@@ -26,7 +33,7 @@
     border-radius: 50%;
     color: #fff;
     text-align: center;
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 700;
     line-height: 54px;
 }
@@ -37,14 +44,23 @@
 .tittle__text{
     font-size: 16px;
     font-weight: 700;
+    max-width: 80%;
+    width: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .tittle_details{
     margin-left: auto;
     font-size: 12px;
+    color: #686c72;
+    align-self: flex-end;
 }
 .chatItemMessage{
 
 }
 .message__text{
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

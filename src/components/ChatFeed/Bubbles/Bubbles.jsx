@@ -92,13 +92,14 @@ const Bubbles = () => {
                 <span ref={messagesEndRef}> </span>
 
 
-                <button className={cn(style.scroll_down, {[style.scroll_down__show]: !hasScrolled})} onClick={() => {
-                    scrollDown('smooth')
-                }}>
-                    <ArrowDown size={28} weight="bold"/>
-                </button>
+
 
             </div>
+            <button className={cn(style.scroll_down, {[style.scroll_down__show]: !hasScrolled})} onClick={() => {
+                scrollDown('smooth')
+            }}>
+                <ArrowDown size={28} weight="bold"/>
+            </button>
 
         </div>
     );

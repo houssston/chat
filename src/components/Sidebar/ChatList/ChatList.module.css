@@ -1,3 +1,22 @@
 .container{
-    padding: 0 8px;
+    padding: 8px 2px 8px 7px;
+    overflow: auto;
+    height: 100%;
+}
+.container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+    opacity: 0;
+}
+
+.container::-webkit-scrollbar-thumb {
+    opacity: 0;
+    transition: .5s ease-in-out;
+
+}
+.container:hover::-webkit-scrollbar-thumb{
+    background-color: rgba(0, 0, 0, .2);;
+    border-radius: 10px;
 }

@@ -1,27 +1,45 @@
 .wrapper{
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    flex: 3;
-    background: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);
-    z-index: 2;
     position: relative;
+    transition: width 2s ease-in-out;
+    background: #a1b68d;
+    background: -webkit-linear-gradient(to right, #a1b68d, #9ebd95, #eada83);
+    background: linear-gradient(to right, #a1b68d, #9ebd95, #eada83);
+    /*z-index: 1;*/
 }
+
 .header{
     display: flex;
     background-color: #fff;
     min-height: 55px;
     align-items: center;
+    padding: 8px 13px 8px 24px;
+    z-index: 1;
+    box-shadow: 0 2px 2px rgba(114,114,114,0.12)
 }
 .chat_icon{
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     color: #fff;
     text-align: center;
     font-size: 20px;
     font-weight: 700;
-    line-height: 42px;
+    line-height: 40px;
+    margin-right: 10px;
+
+}
+.title{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+.status{
+    font-size: 14px;
+    font-weight: 400;
+    color: #707579;
 }
 .newMessageForm{
     margin: 0 auto;

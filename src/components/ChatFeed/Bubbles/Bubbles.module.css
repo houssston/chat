@@ -40,7 +40,7 @@
 
 .scroll_down{
     cursor: pointer;
-    position: fixed;
+    position: absolute;
     right: 15px;
     bottom: 80px;
     transform: translateY(80px);
@@ -58,11 +58,11 @@
 .scroll_down:hover{
     background-color: #3390ec;
 }
-.scroll_down svg *{
+.scroll_down > svg *:not(rect){
     transition: 0.25s ease-in;
     stroke: rgb(141, 145, 148);
 }
-.scroll_down:hover > svg *{
+.scroll_down:hover svg *:not(rect){
     stroke: #ffffff;
 }
 .scroll_down__show{

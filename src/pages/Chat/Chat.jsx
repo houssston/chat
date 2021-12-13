@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import ChatFeed from "../../components/ChatFeed/ChatFeed";
 
 import style from "./Chat.module.css"
+import ChatSettings from "../../components/ChatSettings/ChatSettings";
 
 const Chat = () => {
     const {setMemberIsTyping,
@@ -19,7 +20,7 @@ const Chat = () => {
     return (
         <>
             {!!chatConfig &&
-            <div className={style.chatWrapper}>
+            <div className={style.wrapper}>
                 <ChatEngine
                     projectID={chatConfig.projectID}
                     userName={chatConfig.userName}
@@ -63,6 +64,7 @@ const Chat = () => {
                 />
                 <Sidebar/>
                 <ChatFeed setOpenSettings={setOpenSettings}/>
+                 <ChatSettings setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
             </div>
             }
         </>

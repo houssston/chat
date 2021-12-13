@@ -24,7 +24,7 @@ const ChatItem = ({item}) => {
             </div>
             <div className={style.container__right}>
                 <div className={style.chatItemTittle}>
-                    <div className={style.tittle__text}>{item.title}</div>
+                    <h3 className={style.tittle__text}>{item.title}</h3>
                     <div className={style.tittle_details}>
                         {!!item.last_message.created && dateOutput(item.last_message.created)}
                     </div>

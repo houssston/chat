@@ -1,7 +1,7 @@
-.chatWrapper{
+.wrapper{
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
     height: 100vh;
-    overflow: hidden;
+    overflow:hidden !important;
+    position: relative;
 }

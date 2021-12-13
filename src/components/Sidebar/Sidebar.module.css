@@ -1,41 +1,49 @@
 .wrapper{
-    position: relative;
-    flex: 2;
-    max-width: calc(1680px / 4);
-    min-width: 18rem;
+    width: 25vw;
     display: flex;
+    border-right: 1px solid #dadce0
 }
-.main{
+.transition{
+    position: relative;
+}
+.sidebarMain{
     width: 100%;
     height: 100%;
     position: relative;
     transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
 }
-.main_slideLeft{
+.transition__sidebar_active{
     transform: translateX(-100%);
 }
-.mainHeader{
+
+.sidebarHeader{
     min-height: 55px;
     padding: 0 15px;
     display: flex;
     align-items: center;
+
 }
-.mainHeader__btnContainer{
+.sidebarHeader__profilePhoto{
+
+}
+.sidebarHeader__btnContainer{
     position: relative;
     width: 40px;
     height: 40px;
+    margin-left: auto;
     cursor: pointer;
-    transition: .2s opacity,.15s background-color;
+    transition: .15s background-color;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: none;
     background-color: transparent;
 }
-.mainHeader__btnContainer:hover {
+.sidebarHeader__btnContainer:hover {
     background-color: rgba(112, 117, 121, 0.08);
 }
 .btnIcon{
@@ -90,7 +98,50 @@
         opacity: 0;
     }
 }
-
+.searchWrapper{
+    background-color: #f4f4f5;
+    padding: 10px 20px;
+    position: relative;
+}
+.searchInput{
+    width: 100%;
+    border-radius: 20px;
+    padding: 7px 40px;
+    border:solid 2px #f6f6f6;
+    transition: border 0.2s ease;
+}
+.searchInput:focus{
+    border:solid 2px #3390ec;
+    caret-color: #3390ec;
+}
+.searchInput:focus ~.searchIcon *:not(rect){
+    stroke: #3390ec;
+}
+.searchIcon{
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.searchIcon *:not(rect){
+    stroke: #b2b5b7;
+    transition: stroke 0.2s ease;
+}
+.buttonClose{
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    right: 26px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.buttonClose:hover{
+    background-color: rgba(112,117,121,0.08);
+}
+.closeIcon{
+    stroke: #b2b5b7;
+}
 
 /*modal*/
 .modalRoot{
@@ -136,19 +187,39 @@
 
 
 
-.sidebar_toggle{
+.newChatButton{
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(51,144,236);
+    cursor: pointer;
+    transform: translateY(5rem);
+    transition: .25s ease;
 }
-.new_channel_container{
-    transform: translateX(100%);
+.newChatButton:hover{
+    background-color: rgb(74,149,214);
+}
+.wrapper:hover .newChatButton{
+    transform:translateY(0);
+}
+
+.newChatIcon *:not(rect){
+    color: #fff;
+}
+
+
+.newChat{
     width: 100%;
     height: 100%;
     position: absolute;
+    left: 100%;
     transition: all 0.5s ease;
     z-index: 1;
 }
-.move_new_channel{
-    transform: translateX(0);
-}
+

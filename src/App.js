@@ -27,7 +27,7 @@ function App() {
 
     return (authResolved &&
         (<ChatProvider authUser={authUser}>
-            <PrivateRoute path="/" authUser={authUser}>
+            <PrivateRoute  path="/" authUser={authUser} exact>
                 <Chat/>
             </PrivateRoute>
             <PublicRoute path="/signin" authUser={authUser}>
