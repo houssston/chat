@@ -11,9 +11,13 @@ export const ChatContext = React.createContext();
 export const ChatProvider = ({children, authUser}) => {
     const [chatConfig, setChatConfig] = useState(null);
     const [myChats, setMyChats] = useState(null);
+    const [myDetails, setMyDetails] = useState(null);
+
     const [selectedChat, setSelectedChat] = useState(null);
+
     const [typing, setTyping] = useState([]);
-    const [membersTyping, setMembersTyping] = useState([]);
+    const [membersWhoTyping, setMembersWhoTyping] = useState([]);
+
     const [isFetching, setFetching] = useState(null);
 
     const getMessages = async (chatData, page = 1) => {
@@ -81,9 +85,9 @@ export const ChatProvider = ({children, authUser}) => {
         }
     };
     useEffect(() => {
-        setMembersTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
+        setMembersWhoTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
         const deferredDelete = setTimeout(() => {
-            setMembersTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
+            setMembersWhoTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
         }, 3000);
         return () => {
             clearTimeout(deferredDelete);
@@ -118,12 +122,20 @@ export const ChatProvider = ({children, authUser}) => {
 
     useEffect(() => {
         if (authUser) {
-            onSnapshot(doc(fb.firestore, 'chat', `${authUser.uid}`), (doc) => {
+            onSnapshot(doc(fb.firestore, 'chat', `${authUser.uid}`), async (doc) => {
+                const userData = await chatApi.authenticate({
+                    projectID : process.env.REACT_APP_PROJECT_ID,
+                    userName : doc.data().userName,
+                    userSecret : authUser.uid
+                });
+                setMyDetails(userData);
                 setChatConfig({
                     userSecret: authUser.uid,
                     userName: doc.data().userName,
                     projectID: `${process.env.REACT_APP_PROJECT_ID}`,
+
                 });
+
             });
         }
     }, [authUser]);
@@ -132,19 +144,17 @@ export const ChatProvider = ({children, authUser}) => {
     return (
         <ChatContext.Provider
             value={{
-                setMemberIsTyping,
+                myChats, setMyChats,
+                myDetails, setMyDetails,
+                selectedChat,setSelectedChat,
+                membersWhoTyping,
+                chatConfig,
+                isFetching,
                 setMembers,
                 createNewChat,
                 deleteChat,
                 newMessage,
-                myChats,
-                chatConfig,
-                selectedChat,
                 getMessages,
-                setMyChats,
-                setSelectedChat,
-                membersTyping,
-                isFetching,
             }}
         >
             {children}
@@ -154,35 +164,31 @@ export const ChatProvider = ({children, authUser}) => {
 
 export const useChat = () => {
     const {
-        setMemberIsTyping,
+        myChats, setMyChats,
+        myDetails, setMyDetails,
+        selectedChat,setSelectedChat,
+        membersWhoTyping,
+        chatConfig,
+        isFetching,
         setMembers,
         createNewChat,
         deleteChat,
         newMessage,
-        myChats,
-        chatConfig,
-        selectedChat,
         getMessages,
-        setMyChats,
-        setSelectedChat,
-        membersTyping,
-        isFetching,
     } = useContext(ChatContext);
 
     return {
-        setMemberIsTyping,
+        myChats, setMyChats,
+        myDetails, setMyDetails,
+        selectedChat,setSelectedChat,
+        membersWhoTyping,
+        chatConfig,
+        isFetching,
         setMembers,
         createNewChat,
         deleteChat,
         newMessage,
-        myChats,
-        chatConfig,
-        selectedChat,
         getMessages,
-        setMyChats,
-        setSelectedChat,
-        membersTyping,
-        isFetching,
     };
 };
 

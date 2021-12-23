@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useHistory} from 'react-router-dom';
 import * as Yup from "yup";
 import {chatApi} from "../../api/api"
 import {fb} from "../../firebase";
+import style from "./Signup.module.css";
+
 
 const validationSchema = Yup.object().shape({
     userName: Yup.string()
@@ -22,21 +24,37 @@ const validationSchema = Yup.object().shape({
 
 const Signup = () => {
     const history = useHistory();
-    const submitLogin = ({userName,email,password}) => {
+
+
+    const submitLogin =  ({userName,firstName,lastName,email,password}) => {
         fb.auth.createUserWithEmailAndPassword(email, password)
             .then(response => {
+
                 chatApi.createUser({
                     username: userName,
-                    secret: response.user.uid
-                })
-                    .then(() =>{
-                        fb.firestore
-                            .collection('chat')
-                            .doc(response.user.uid)
-                            .set({ userName}, { merge: true });
-                    })
+                    first_name:firstName,
+                    last_name:lastName,
+                    email:email,
+                    secret: response.user.uid,
+                });
+                fb.firestore
+                    .collection('chat')
+                    .doc(response.user.uid)
+                    .set({ userName}, { merge: true })
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
             })
     };
+   /* const onMainPhotoSelected= (e) =>{
+        if(e.target.files.length){
+            setImage(e.target.files[0]);
+
+        }
+    };*/
+
 
     return (
         <div>
@@ -51,13 +69,22 @@ const Signup = () => {
                     confirmPassword: '',
                 }}
                 validationSchema={validationSchema}
+
             >
                 {({isValid}) => (
-                    <Form>
+                    <Form className={style.form}>
                         <label>
                             User Name
                             <Field name="userName" type="text"/>
                             <ErrorMessage className="error" component="div" name="userName"/>
+                        </label>
+                        <label>
+                            First name
+                            <Field name="firstName" type="text"/>
+                        </label>
+                        <label>
+                            Last name
+                            <Field name="lastName" type="text"/>
                         </label>
                         <label>
                             Email
@@ -74,6 +101,10 @@ const Signup = () => {
                             <Field name="confirmPassword" type="password"/>
                             <ErrorMessage className="error" component="div" name="confirmPassword"/>
                         </label>
+                        {/*<label>
+                            avatar
+                            <Field name="file" type="file" onChange={onMainPhotoSelected}/>
+                        </label>*/}
                         <div className="auth-link-container">
                             Already have an account?{' '}
                             <span

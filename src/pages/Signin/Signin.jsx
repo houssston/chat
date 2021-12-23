@@ -22,6 +22,10 @@ const Signin = () => {
             .then(response => {
                 //console.log(response);
             })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
     };
 
 
