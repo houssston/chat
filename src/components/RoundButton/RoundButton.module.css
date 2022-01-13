@@ -1,0 +1,25 @@
+.roundButton{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(51,144,236);
+    cursor: pointer;
+    transition: .25s ease;
+    transform: translateY(5rem);
+}
+.roundButton:hover{
+    background-color: rgb(74,149,214);
+}
+.roundButton_show{
+    transform:translateY(0);
+}
+
+.roundButton svg *:not(rect){
+    color: #fff;
+}

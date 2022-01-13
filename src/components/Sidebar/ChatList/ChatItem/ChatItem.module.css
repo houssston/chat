@@ -15,11 +15,11 @@
 .container_active .tittle_details{
     color: #fff;
 }
-.container__left{
+.left{
     width: 54px;
     height: 54px;
 }
-.container__right{
+.right{
     flex: 1;
     padding: 0 7px 0 9px;
     overflow: hidden;
@@ -56,11 +56,16 @@
     color: #686c72;
     align-self: flex-end;
 }
-.chatItemMessage{
-
-}
 .message__text{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: rgb(112,117,121);
 }
+.message__text span{
+    color: #000;
+}
+.container_active .message__text, .container_active .message__text span{
+    color: #fff;
+}
+

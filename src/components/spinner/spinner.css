@@ -1,0 +1,53 @@
+.spinner-container {
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, .5);
+}
+
+.spinner-container p {
+    text-align: center;
+    margin: 5px 0 0 0;
+}
+
+.spinner {
+    width: 65px;
+    height: 65px;
+    animation: rotator linear infinite
+}
+
+@keyframes rotator {
+    0% {
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.spinner .path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 186;
+    transform-origin: center;
+    animation: dash 1.4s ease-in-out infinite
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 186
+    }
+    50% {
+        stroke-dashoffset: 46.75;
+        transform: rotate(135deg)
+    }
+    100% {
+        stroke-dashoffset: 186;
+        transform: rotate(360deg)
+    }
+}
+
+

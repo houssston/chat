@@ -6,15 +6,12 @@
 .container::-webkit-scrollbar {
     width: 6px;
 }
-
 .container::-webkit-scrollbar-track {
     opacity: 0;
 }
-
 .container::-webkit-scrollbar-thumb {
     opacity: 0;
     transition: .5s ease-in-out;
-
 }
 .container:hover::-webkit-scrollbar-thumb{
     background-color: rgba(0, 0, 0, .2);;

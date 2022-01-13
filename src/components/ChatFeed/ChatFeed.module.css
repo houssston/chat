@@ -7,9 +7,8 @@
     background: #a1b68d;
     background: -webkit-linear-gradient(to right, #a1b68d, #9ebd95, #eada83);
     background: linear-gradient(to right, #a1b68d, #9ebd95, #eada83);
-    /*z-index: 1;*/
+    z-index: 1;
 }
-
 .header{
     display: flex;
     background-color: #fff;

@@ -59,7 +59,7 @@ const ChatFeed = (props) => {
 
                 <Bubbles/>
 
-                {membersTyping.map((item, id) => (
+                {!!membersTyping && membersTyping.map((item, id) => (
                     <div key={id}>
                         {item.username} is typing
                         <div className={style.typing}>

@@ -1,16 +1,17 @@
 import React, {useState, useRef, useEffect} from 'react';
-
 import {useChat} from "../../context/context";
 import cn from 'classnames';
 import {fb} from "../../firebase";
-import style from "./Sidebar.module.css";
 import Modal from "react-responsive-modal";
-import {newChat} from "react-chat-engine";
-import {ArrowLeft, Camera, Gear, MagnifyingGlass, Pen, SignOut, X} from "phosphor-react";
-
-import ChatList from "./ChatList/ChatList";
-import {CSSTransition} from "react-transition-group";
+import {Camera, Gear, MagnifyingGlass, Pen, SignOut, X} from "phosphor-react";
 import {chatApi} from "../../api/api";
+import NewChat from "./NewChat/NewChat";
+import ChatList from "./ChatList/ChatList";
+
+import style from "./Sidebar.module.css";
+import RoundButton from "../RoundButton/RoundButton";
+import {addPerson} from "react-chat-engine";
+import Avatar from "../Avatar/Avatar";
 
 const Sidebar = () => {
     const {
@@ -20,27 +21,29 @@ const Sidebar = () => {
     } = useChat();
     const [openModal, setOpenModal] = useState(false);
     const [slideSidebar, setSlideSidebar] = useState(false);
+    const [sidebarOnMouse, setSidebarOnMouse] = useState(false);
+    const [searchField, setSearchField] = useState("");
 
     const sidebarHeaderRef = useRef(null);
-    const hoverRef = useRef(null);
+    const sidebarRef = useRef(null);
     const avatarFieldRef = useRef(null);
 
-    const [avatarIsFetching,setAvatarIsFetching] = useState(false);
+    const [avatarIsFetching, setAvatarIsFetching] = useState(false);
 
-    const [channelName, setChannelName] = useState(null);
-
-
-    const handleMouseEnter = () => setOpenModal(false);
-
+    const toggleSidebar = () => setSlideSidebar(!slideSidebar);
+    const handleMouseEnter = () => setSidebarOnMouse(true);
+    const handleMouseLeave = () => {
+        setOpenModal(false);
+        setSidebarOnMouse(false)
+    };
     useEffect(() => {
-        if (openModal) {
-            hoverRef.current.addEventListener('mouseleave', handleMouseEnter);
-            return () => {
-                !!hoverRef.current && hoverRef.current.removeEventListener('mouseleave', handleMouseEnter);
-            }
+        sidebarRef.current.addEventListener('mouseenter', handleMouseEnter);
+        sidebarRef.current.addEventListener('mouseleave', handleMouseLeave);
+        return () => {
+            !!sidebarRef.current && sidebarRef.current.removeEventListener('mouseenter', handleMouseEnter);
+            !!sidebarRef.current && sidebarRef.current.removeEventListener('mouseleave', handleMouseLeave);
         }
-    }, [openModal]);
-
+    });
     const uploadAvatar = (e) => {
         if (e.target.files.length) {
             setAvatarIsFetching(true);
@@ -52,28 +55,27 @@ const Sidebar = () => {
             )
         }
     };
-
-    const createChannel = () => {
-        newChat(chatConfig, {title: channelName});
-        setSlideSidebar(false);
-        setChannelName(null);
-    };
-
-
     return (
-        <div className={cn(style.wrapper, style.transition)} ref={hoverRef}>
-            <div className={cn(style.sidebarMain, {[style.transition__sidebar_active]: slideSidebar})}>
-                <div className={style.sidebarHeader} ref={sidebarHeaderRef}>
+        <div className={cn(style.wrapper, style.transition)}>
+            <div className={cn(style.main, {[style.main_transitionActive]: slideSidebar})} ref={sidebarRef}>
 
-                    <div className={style.avatarContainer}>
+                <div className={style.header} ref={sidebarHeaderRef}>
+                    <Avatar str={myDetails.username} size={`medium`} mix={style.avatarContainer}>
                         <div className={style.avatarEdit}>
-                            <input className={style.avatarEdit__field} type='file' accept=".png, .jpg, .jpeg" ref={avatarFieldRef} onChange={uploadAvatar} disabled={avatarIsFetching}/>
-                            <Camera size={15} weight="fill" className={style.avatarEdit__icon} onClick={() => avatarFieldRef.current.click() }/>
+                            <input className={style.avatarEdit__field} type='file' accept=".png, .jpg, .jpeg"
+                                   ref={avatarFieldRef} onChange={uploadAvatar} disabled={avatarIsFetching}/>
+                            <Camera size={15} weight="fill" className={style.avatarEdit__icon}
+                                    onClick={() => avatarFieldRef.current.click()}/>
                         </div>
-                        <img className={style.avatarPreview} src={myDetails.avatar} alt="Profile photo"/>
-                    </div>
+                        {!!myDetails.avatar
+                            ? <img className={style.avatarPreview} src={myDetails.avatar} alt="Profile photo"/>
+                            : !!myDetails.first_name || !!myDetails.last_name
+                                ? myDetails.first_name.substring(0, 1).toUpperCase() + myDetails.last_name.substring(0, 1).toUpperCase()
+                                : myDetails.username.substring(0, 1).toUpperCase()
+                        }
+                    </Avatar>
 
-                    <button className={style.sidebarHeader__btnContainer} onClick={() => setOpenModal(true)}>
+                    <button className={style.header__btnContainer} onClick={() => setOpenModal(true)}>
                         <div className={style.btnIcon}></div>
                         <div className={cn(style.animatedBtnIcon, {[style.animatedBtnIcon_active]: openModal})}></div>
                     </button>
@@ -93,58 +95,35 @@ const Sidebar = () => {
                     >
                         <div className={style.modalMenuList}>
                             <div className={style.modalMenuItem}>
-                                <Gear size={22} />
+                                <Gear size={22}/>
                                 Settings
                             </div>
                             <div className={style.modalMenuItem} onClick={() => fb.auth.signOut()}>
-                                <SignOut size={22} />
-                                Sign out
+                                <SignOut size={22}/>
+                                Sign Out
                             </div>
                         </div>
                     </Modal>
+
                 </div>
+
                 <div className={style.searchWrapper}>
-                    <input type="text" className={style.searchInput} placeholder="Search"/>
+                    <input type="text" className={style.searchInput} placeholder="Search" value={searchField}
+                           onChange={(e) => setSearchField(e.target.value)}/>
                     <MagnifyingGlass size={22} weight="bold" className={style.searchIcon}/>
-                    <button type="button" className={style.buttonClose}>
-                        <X size={15} className={style.closeIcon}/>
+                    <button type="button" className={style.clearSearchInput} onClick={() => setSearchField("")}>
+                        <X size={15} className={style.clearIcon}/>
                     </button>
                 </div>
 
-                <ChatList/>
+                <ChatList searchField={searchField}/>
 
-                <div onClick={() => setSlideSidebar(true)} className={style.newChatButton}>
-                    <Pen size={28} className={style.newChatIcon}/>
-                </div>
+                <RoundButton event={toggleSidebar} show={sidebarOnMouse}>
+                    <Pen size={28}/>
+                </RoundButton>
             </div>
-            <CSSTransition
-                in={slideSidebar}
-                timeout={500}
-                classNames={
-                    {
-                        enterActive: style.transition__sidebar_active,
-                        enterDone: style.transition__sidebar_active,
 
-                    }
-                }
-                unmountOnExit
-            >
-                <div className={cn(style.newChat)}>
-                    <button onClick={() => setSlideSidebar(false)}>
-                        <ArrowLeft size={28}/>
-                    </button>
-                    <input type="text" onChange={(e) => setChannelName(e.target.value)}/>
-                    <button onClick={() => createChannel()}>создать</button>
-                </div>
-
-            </CSSTransition>
-
-
-            {/*newChat(chatConfig,{title:'test2'}, (data) =>{selectChatClick(data.id)}*/}
-            {/*<div className={style.new_channel_container}>
-                <input type="text" />
-                <button>создать</button>
-            </div>*/}
+            <NewChat slideSidebar={slideSidebar} setSlideSidebar={setSlideSidebar}/>
         </div>
     );
 };

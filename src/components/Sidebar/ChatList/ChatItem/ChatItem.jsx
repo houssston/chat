@@ -4,6 +4,8 @@ import style from "./ChatItem.module.css";
 import randomColor from "randomcolor";
 import {dateOutput} from "../../../../helpers/dateOutput";
 import {useChat} from "../../../../context/context";
+import {Camera} from "phosphor-react";
+import Avatar from "../../../Avatar/Avatar";
 
 const ChatItem = ({item}) => {
     const {selectedChat,getMessages} = useChat();
@@ -14,15 +16,18 @@ const ChatItem = ({item}) => {
             key={item.id} onClick={() => {
             getMessages(item)
         }}>
-            <div className={style.container__left}>
-                <div style={{
+            <div className={style.left}>
+               {/* <div style={{
                     backgroundColor: `${randomColor({
                         luminosity: 'light',
                         seed: item.title.charCodeAt(0)
                     })}`
-                }} className={style.chatItemLogo}>{item.title.substring(0, 1).toUpperCase()}</div>
+                }} className={style.chatItemLogo}>{item.title.substring(0, 1).toUpperCase()}</div>*/}
+                <Avatar str={item.title} size={`large`}>
+                    {item.title.substring(0, 1).toUpperCase()}
+                </Avatar>
             </div>
-            <div className={style.container__right}>
+            <div className={style.right}>
                 <div className={style.chatItemTittle}>
                     <h3 className={style.tittle__text}>{item.title}</h3>
                     <div className={style.tittle_details}>

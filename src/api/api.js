@@ -26,9 +26,6 @@ export const chatApi = {
             .then(response => {
                 return response.data;
             })
-            .catch(error => {
-                return error
-            })
     },
     updateMyDetails(file, chatConfig) {
         const formData = new FormData();
@@ -44,23 +41,12 @@ export const chatApi = {
             return response.data;
         });
     },
-    /*getUser(userId) {
-        return instance.get(`users/${userId}`)
+    getUser() {
+        return instance.get(`users`)
             .then(response => {
                 return response.data;
             });
     },
-    updateUser(file, id) {
-        const formData = new FormData();
-        formData.append('avatar', file);
-        return instance.patch(`users/${id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response => {
-            return response.data;
-        });
-    },*/
     userIsTyping(selectedChat, chatConfig) {
         return instance.post(`chats/${selectedChat}/typing/`, {}, {
             headers: {

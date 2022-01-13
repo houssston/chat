@@ -85,7 +85,7 @@ const Bubbles = () => {
     return (
         <div className={style.scrollable} ref={scrollable}>
             <div className={style.messageList}>
-                {selectedChat.messages.map((item) => (
+                {!!selectedChat.messages && selectedChat.messages.map((item) => (
                     <Bubble item={item}/>
                     ))
                 }
