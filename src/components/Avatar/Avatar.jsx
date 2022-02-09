@@ -6,9 +6,9 @@ import randomColor from "randomcolor";
 const Avatar = ({str, size = `medium`, mix, children}) => {
     return (
         <div className={cn(style.container,
-            {[style.avatar_sizeLarge]: size === `large`},
-            {[style.avatar_sizeMedium]: size === `medium`},
-            {[style.avatar_sizeSmall]: size === `small`}, mix
+            {[style.sizeLarge]: size === `large`},
+            {[style.sizeMedium]: size === `medium`},
+            {[style.sizeSmall]: size === `small`}, mix
         )
         }
              style={{

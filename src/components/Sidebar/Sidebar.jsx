@@ -12,6 +12,7 @@ import style from "./Sidebar.module.css";
 import RoundButton from "../RoundButton/RoundButton";
 import {addPerson} from "react-chat-engine";
 import Avatar from "../Avatar/Avatar";
+import {CSSTransition} from "react-transition-group";
 
 const Sidebar = () => {
     const {
@@ -118,12 +119,14 @@ const Sidebar = () => {
 
                 <ChatList searchField={searchField}/>
 
-                <RoundButton event={toggleSidebar} show={sidebarOnMouse}>
+                <RoundButton event={toggleSidebar} visibility={!sidebarOnMouse} mix={style.newChatButton}>
                     <Pen size={28}/>
                 </RoundButton>
+
             </div>
 
             <NewChat slideSidebar={slideSidebar} setSlideSidebar={setSlideSidebar}/>
+
         </div>
     );
 };

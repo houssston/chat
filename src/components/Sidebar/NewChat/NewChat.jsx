@@ -4,7 +4,7 @@ import {ArrowLeft, ArrowRight, Pen, X} from "phosphor-react";
 import {CSSTransition} from "react-transition-group";
 import {chatApi} from "../../../api/api";
 import RoundButton from "../../RoundButton/RoundButton";
-import {addPerson, newChat} from "react-chat-engine";
+import {addPerson, getChats, newChat} from "react-chat-engine";
 
 import style from "./NewChat.module.css";
 import {useChat} from "../../../context/context";
@@ -16,11 +16,13 @@ import Spinner from "../../spinner/Spinner";
 const NewChat = (props) => {
     const {
         chatConfig,
-        myDetails
+        myDetails,
+        setMyChats,
+        getMessages
     } = useChat();
 
-    const [channelName, setChannelName] = useState(null);
-    const [searchPerson, setSearchPerson] = useState(null);
+    const [channelName, setChannelName] = useState("");
+    const [searchPerson, setSearchPerson] = useState("");
     const [personList, setPersonList] = useState(null);
     const [filteredPersonList, setFilteredPersonList] = useState(null);
     const [selectedPerson, setSelectedPerson] = useState([]);
@@ -55,11 +57,13 @@ const NewChat = (props) => {
             for (let i = 0; i < selectedPerson.length; i++) {
                 await addPerson(chatConfig, response.id, selectedPerson[i].username)
             }
+            /*await getChats(chatConfig, setMyChats);
+            getMessages(response);*/
             setFetching(false);
             props.setSlideSidebar(false)
         });
     };
-
+    //console.log(myDetails);
     return (
         <CSSTransition
             in={props.slideSidebar}
@@ -73,8 +77,8 @@ const NewChat = (props) => {
             unmountOnExit
             onEnter={() => fetchPersonList()}
             onExited={() => {
-                setChannelName(null);
-                setSearchPerson(null);
+                setChannelName("");
+                setSearchPerson("");
                 setFilteredPersonList(null);
                 setSelectedPerson([]);
             }}
@@ -169,12 +173,12 @@ const NewChat = (props) => {
                             )}
                         </div>
                     }
-
-                    <RoundButton event={createChat} show={channelName}>
+                    <RoundButton event={createChat} visibility={!channelName} mix={style.creatChatButton}>
                         <ArrowRight size={28}/>
                     </RoundButton>
                 </div>
-                {isFetching &&
+                {
+                    isFetching &&
                     <Spinner speed={1.4} customColor={`#4a95d6`}/>
                 }
             </div>

@@ -18,10 +18,7 @@ export const ChatProvider = ({children, authUser}) => {
     const [typing, setTyping] = useState([]);
     const [membersWhoTyping, setMembersWhoTyping] = useState([]);
 
-    const [isFetching, setFetching] = useState(null);
-
     const getMessages = async (chatData, page = 1) => {
-        setFetching(true);
 
         let data = await chatApi.getLatestMessages(chatData.id, page * 15, chatConfig);
         setSelectedChat({
@@ -31,22 +28,13 @@ export const ChatProvider = ({children, authUser}) => {
             currentPage: page,
             hasMoreMessage: data.length === page * 15 ? true : false
         });
-        setFetching(false);
 
     };
 
     const createNewChat = (chatData) => {
-        if (chatData.admin.username === chatConfig.userName) {
-            getChats(chatConfig, (chats) => {
-                /*getMessages(chatConfig, chatData.id, (chatID, messages) => {
-                    setMyChats(chats);
-                    setSelectedChat({
-                        chatData, chatID, messages
-                    });
-                });*/
-            })
-        } else {
-            getChats(chatConfig, setMyChats);
+        setMyChats([...myChats,chatData]);
+        if (chatData.admin.username === myDetails.username) {
+            getMessages(chatData);
         }
     };
 
@@ -73,17 +61,18 @@ export const ChatProvider = ({children, authUser}) => {
     };
 
     const setMemberIsTyping = (data) => {
-        if (!!selectedChat && data.chatId === selectedChat.chatID && data.username !== chatConfig.userName) {
+        if (!!selectedChat && data.chatId === selectedChat.chatID && data.username !== myDetails.username) {
             typing.some(e => e.username === data.username)
                 ? setTyping(typing.map(e => {
-                    if (e.username === data.username && e.chatId === data.chatId) {
+                    if (e.username === data.username) {
                         return {...e, date: moment().format()}
                     }
                     return e;
                 }))
-                : setTyping([...typing, {...data, date: moment().format()}])
+                : setTyping([...typing, {...selectedChat.chatData.people.find(e => e.person.username === data.username).person, date: moment().format()}])
         }
     };
+
     useEffect(() => {
         setMembersWhoTyping(typing.filter(member => moment().diff(moment(member.date), 'seconds') < 2));
         const deferredDelete = setTimeout(() => {
@@ -93,7 +82,6 @@ export const ChatProvider = ({children, authUser}) => {
             clearTimeout(deferredDelete);
         };
     }, [typing]);
-
 
     const newMessage = (data) => {
         setMyChats(myChats.map(e => {
@@ -147,9 +135,8 @@ export const ChatProvider = ({children, authUser}) => {
                 myChats, setMyChats,
                 myDetails, setMyDetails,
                 selectedChat,setSelectedChat,
-                membersWhoTyping,
+                membersWhoTyping, setMemberIsTyping,
                 chatConfig,
-                isFetching,
                 setMembers,
                 createNewChat,
                 deleteChat,
@@ -166,10 +153,9 @@ export const useChat = () => {
     const {
         myChats, setMyChats,
         myDetails, setMyDetails,
-        selectedChat,setSelectedChat,
-        membersWhoTyping,
+        selectedChat, setSelectedChat,
+        membersWhoTyping, setMemberIsTyping,
         chatConfig,
-        isFetching,
         setMembers,
         createNewChat,
         deleteChat,
@@ -181,9 +167,9 @@ export const useChat = () => {
         myChats, setMyChats,
         myDetails, setMyDetails,
         selectedChat,setSelectedChat,
+        setMemberIsTyping,
         membersWhoTyping,
         chatConfig,
-        isFetching,
         setMembers,
         createNewChat,
         deleteChat,

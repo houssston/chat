@@ -3,10 +3,10 @@ import cn from "classnames";
 import style from "./RoundButton.module.css";
 
 
-const RoundButton = ({event, show = false, children}) => {
+const RoundButton = ({event, visibility, mix, children}) => {
     return (
         <div onClick={()=>event()}
-             className={cn(style.roundButton, {[style.roundButton_show]:show})}>
+             className={cn(style.default, {[style.default_hide]:visibility}, mix)}>
             {children}
         </div>
     );

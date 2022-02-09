@@ -1,6 +1,7 @@
 .wrapper{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 0 auto 1fr;
+    grid-template-rows: 100%;
     height: 100vh;
     overflow:hidden !important;
     position: relative;

@@ -1,4 +1,4 @@
-.newChat{
+.newChat {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -8,84 +8,101 @@
     display: flex;
     flex-direction: column;
 }
-.transition__sidebar_active{
+
+.transition__sidebar_active {
     transform: translateX(-100%);
 }
-.newChat__header{
+
+.newChat__header {
     display: flex;
     align-items: center;
     padding: 8px 16px;
 }
+
 .newChat__header h3 {
     font-size: 20px;
     margin-left: 25px;
     font-weight: 500;
 }
-.buttonReturn{
+
+.buttonReturn {
     width: 40px;
     height: 40px;
     padding: 5px;
     border-radius: 50%;
     transition: background-color .2s
 }
-.buttonReturn:hover{
-    background-color: rgba(112,117,121, 0.08);
+
+.buttonReturn:hover {
+    background-color: rgba(112, 117, 121, 0.08);
 }
-.newChat__main{
+
+.newChat__main {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
-.channelNameWrapper{
+
+.channelNameWrapper {
     padding: 0 20px;
     margin-bottom: 25px;
 }
-.inputGroup{
+
+.inputGroup {
     position: relative;
 }
-.channelName{
+
+.channelName {
     width: 100%;
     padding: 10px 14px;
     border-radius: 12px;
-    border: 1px solid rgb(218,220,224);
+    border: 1px solid rgb(218, 220, 224);
     transition: .15s ease;
 }
-.channelName:hover{
-    border-color: rgb(51,144,236);
+
+.channelName:hover {
+    border-color: rgb(51, 144, 236);
 }
-.channelName:focus{
-    border-color:rgb(51,144,236);
-    box-shadow: inset 0 0 0 1px rgb(51,144,236);
+
+.channelName:focus {
+    border-color: rgb(51, 144, 236);
+    box-shadow: inset 0 0 0 1px rgb(51, 144, 236);
 }
-.inputPlaceholder{
+
+.inputPlaceholder {
     position: absolute;
     top: 12px;
     background-color: #fff;
     font-size: 16px;
     font-weight: 400;
     color: #A2ACB4;
-    transition: transform .15s ease-out,color .15s ease-out;
+    transition: transform .15s ease-out, color .15s ease-out;
     left: 15px;
     pointer-events: none;
 }
-.channelName:hover + .inputPlaceholder{
-    color: rgb(51,144,236);
+
+.channelName:hover + .inputPlaceholder {
+    color: rgb(51, 144, 236);
 }
-.channelName:focus + .inputPlaceholder{
-    color: rgb(51,144,236);
+
+.channelName:focus + .inputPlaceholder {
+    color: rgb(51, 144, 236);
 }
-.touched .inputPlaceholder, .inputGroup .channelName:focus + .inputPlaceholder{
+
+.touched .inputPlaceholder, .inputGroup .channelName:focus + .inputPlaceholder {
     transform: scale(0.75) translate(-18px, -32px);
 }
-.pickerSelectedList{
+
+.pickerSelectedList {
     display: flex;
     flex-flow: row wrap;
 }
-.pickerSelectedItem{
+
+.pickerSelectedItem {
     position: relative;
     display: flex;
     flex-direction: row;
-    background-color: rgb(244,244,245);
+    background-color: rgb(244, 244, 245);
     margin: 0 0 8px 8px;
     border-radius: 15px;
     padding-right: 16px;
@@ -93,24 +110,29 @@
     max-width: calc(50% - 8px);
     transition: background-color .15s ease;
 }
-.pickerSelectedItem:hover{
+
+.pickerSelectedItem:hover {
     background-color: rgba(229, 57, 53, .16);
 }
-.itemAvatar{
+
+.itemAvatar {
     opacity: 1;
     transition: opacity .15s ease;
 }
-.pickerSelectedItem:hover .itemAvatar{
+
+.pickerSelectedItem:hover .itemAvatar {
     opacity: 0;
 }
-.itemName{
+
+.itemName {
     align-self: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-left: 8px;
 }
-.itemRemove{
+
+.itemRemove {
     position: absolute;
     opacity: 0;
     background-color: #e53935;
@@ -122,32 +144,39 @@
     align-items: center;
     transition: opacity .15s ease;
 }
-.pickerSelectedItem:hover .itemRemove{
+
+.pickerSelectedItem:hover .itemRemove {
     opacity: 1;
 }
-.addChatMembers{
-    border-bottom: 1px solid rgb(218,220,224);
+
+.addChatMembers {
+    border-bottom: 1px solid rgb(218, 220, 224);
     padding: 0 20px 4px;
 }
-.searchPerson{
+
+.searchPerson {
     border: none;
     margin: 0 0 8px 8px;
     font-size: 16px;
 }
+
 .searchPerson::placeholder {
     color: rgb(173, 175, 179);
 }
-.noResults{
+
+.noResults {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     color: rgb(112, 117, 121);
 }
-.pickerList{
+
+.pickerList {
     padding: 8px 8px;
 }
-.pickerItem{
+
+.pickerItem {
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -156,17 +185,20 @@
     min-height: 70px;
     user-select: none;
 }
-.pickerItem:hover{
+
+.pickerItem:hover {
     background-color: rgb(244, 244, 245);
 }
-.checkboxContainer{
+
+.checkboxContainer {
     width: 64px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.checkbox{
+
+.checkbox {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -175,10 +207,12 @@
     opacity: 0;
     cursor: pointer;
 }
-.checkbox__animation{
+
+.checkbox__animation {
     display: flex;
     margin-bottom: 0;
 }
+
 .checkbox + .checkbox__animation:before {
     content: "";
     border: 2px solid rgb(218, 220, 224);
@@ -188,36 +222,56 @@
     height: 18px;
     transition: .2s;
 }
+
 .checkbox:checked + .checkbox__animation:before {
     border-color: rgb(51, 144, 236);
     background: center no-repeat url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEzLjkuOEw1LjggOC45IDIuMSA1LjJjLS40LS40LTEuMS0uNC0xLjYgMC0uNC40LS40IDEuMSAwIDEuNkw1IDExLjJjLjQuNCAxLjEuNCAxLjYgMGw4LjktOC45Yy40LS40LjQtMS4xIDAtMS42LS41LS40LTEuMi0uNC0xLjYuMXoiIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvc3ZnPg==), rgb(51, 144, 236);
     background-size: .875rem;
 }
+
 .checkbox:disabled + .checkbox__animation:before {
     transform: scale(1);
     border-color: #aaa;
 }
+
 .checkbox:checked:disabled + .checkbox__animation:before {
     transform: scale(1);
     background-color: #bfb;
     border-color: #bfb;
 }
 
-.personInformation{
+.personInformation {
     display: flex;
     flex-grow: 1;
     align-items: center;
 }
-.mr10{
+
+.mr10 {
     margin-right: 10px;
 }
-.info{
+
+.info {
     flex-grow: 1;
     align-self: flex-start;
 }
-.info h3{
+
+.info h3 {
     font-weight: 500;
     font-size: 16px;
+}
 
+.creatChatButton{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: rgb(51, 144, 236);
+}
+
+.creatChatButton:hover {
+    background-color: rgb(74, 149, 214);
+}
+
+.creatChatButton svg *:not(rect) {
+    color: #fff;
 }
 

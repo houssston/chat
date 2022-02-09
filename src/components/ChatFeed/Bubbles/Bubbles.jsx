@@ -1,9 +1,12 @@
-import React,{useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {ArrowDown} from "phosphor-react";
 import {useChat} from "../../../context/context";
 import cn from "classnames";
 import Bubble from "./Bubble/Bubble";
 import style from "./Bubbles.module.css"
+import {groupMessagesByAuthor, groupMessagesByDate} from "../../../helpers/groupMessages";
+import {convertDate} from "../../../helpers/dateOutput";
+import RoundButton from "../../RoundButton/RoundButton";
 
 
 const Bubbles = () => {
@@ -54,15 +57,14 @@ const Bubbles = () => {
             scrollContainer.scrollTop = scrollContainer.scrollHeight - scrollContainer.offsetHeight - scrollBottom;
         }
 
-    },[selectedChat.currentPage]);
+    }, [selectedChat.currentPage]);
 
     useEffect(() => {
         if (selectedChat.messages) {
-            if(hasScrolled){
+            if (hasScrolled) {
                 scrollDown('smooth');
-            }
-            else{
-                if(selectedChat.messages[selectedChat.messages.length - 1].status === "waiting"){
+            } else {
+                if (selectedChat.messages[selectedChat.messages.length - 1].status === "waiting") {
                     scrollDown('smooth');
                 }
             }
@@ -76,30 +78,33 @@ const Bubbles = () => {
 
 
     useEffect(() => {
-        scrollable.current.addEventListener("scroll", scrollListener);
+        !!scrollable.current && scrollable.current.addEventListener("scroll", scrollListener);
         return () => {
-            scrollable.current.removeEventListener("scroll", scrollListener);
+            !!scrollable.current && scrollable.current.removeEventListener("scroll", scrollListener);
         }
     });
 
     return (
         <div className={style.scrollable} ref={scrollable}>
             <div className={style.messageList}>
-                {!!selectedChat.messages && selectedChat.messages.map((item) => (
-                    <Bubble item={item}/>
-                    ))
-                }
+                {!!selectedChat.messages && groupMessagesByDate(selectedChat.messages).map((a, key) => (
+                    <div className={style.messageGroupByDate} key={key}>
+                        <div className={style.date}>
+                                <span>
+                                    {convertDate.forChatFeed(a.created)}
+                                </span>
+                        </div>
+                        {groupMessagesByAuthor(a.message).map((b, keyB) => (
+                            <Bubble item={b} key={keyB}/>
+                        ))}
+                    </div>
+                ))}
                 <span ref={messagesEndRef}> </span>
-
-
-
-
             </div>
-            <button className={cn(style.scroll_down, {[style.scroll_down__show]: !hasScrolled})} onClick={() => {
-                scrollDown('smooth')
-            }}>
+            <RoundButton event={() => scrollDown('smooth')}
+                         mix={cn(style.scrollDown, {[style.scrollDown_show]: !hasScrolled})}>
                 <ArrowDown size={28} weight="bold"/>
-            </button>
+            </RoundButton>
 
         </div>
     );

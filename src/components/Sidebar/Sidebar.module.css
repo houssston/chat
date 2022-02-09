@@ -1,13 +1,14 @@
-.wrapper{
+.wrapper {
     width: 25vw;
     display: flex;
-    border-right: 1px solid #dadce0
+    border-right: 1px solid rgb(218,220,224);
 }
-.transition{
+
+.transition {
     position: relative;
 }
 
-.main{
+.main {
     width: 100%;
     height: 100%;
     position: relative;
@@ -15,11 +16,12 @@
     display: flex;
     flex-direction: column;
 }
-.main_transitionActive{
+
+.main_transitionActive {
     transform: translateX(-100%);
 }
 
-.header{
+.header {
     min-height: 55px;
     padding: 0 15px;
     display: flex;
@@ -27,10 +29,11 @@
 
 }
 
-.avatarContainer{
+.avatarContainer {
     position: relative;
 }
-.avatarEdit{
+
+.avatarEdit {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -46,13 +49,16 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
     cursor: pointer;
 }
-.avatarEdit__field{
+
+.avatarEdit__field {
     display: none;
 }
+
 .avatarEdit__icon {
-    fill:#707579;
+    fill: #707579;
 }
-.avatarPreview{
+
+.avatarPreview {
     width: 45px;
     height: 45px;
     border-radius: 100%;
@@ -60,7 +66,7 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
-.header__btnContainer{
+.header__btnContainer {
     position: relative;
     width: 40px;
     height: 40px;
@@ -75,16 +81,20 @@
     align-items: center;
     background-color: transparent;
 }
+
 .sidebarHeader__btnContainer:hover {
     background-color: rgba(112, 117, 121, 0.08);
 }
-.btnIcon{
+
+.btnIcon {
     position: relative;
 }
+
 .btnIcon:before, .btnIcon:after {
     position: absolute;
     content: '';
 }
+
 .btnIcon, .btnIcon:before, .btnIcon:after {
     width: 18px;
     height: 2px;
@@ -92,16 +102,20 @@
     display: block;
     border-radius: 2px;
 }
+
 .btnIcon:before {
     margin-top: -5px;
 }
+
 .btnIcon:after {
     margin-top: 5px;
 }
-.animatedBtnIcon{
+
+.animatedBtnIcon {
     position: relative;
     z-index: 1;
 }
+
 .animatedBtnIcon::after {
     content: '';
     position: absolute;
@@ -114,9 +128,11 @@
     border-radius: 100%;
     transform: scale(0);
 }
-.animatedBtnIcon_active::after{
+
+.animatedBtnIcon_active::after {
     animation: circleGrow 0.8s linear;
 }
+
 @keyframes circleGrow {
     0% {
         transform: scale(0);
@@ -131,36 +147,42 @@
     }
 }
 
-.searchWrapper{
+.searchWrapper {
     background-color: #f4f4f5;
     padding: 10px 20px;
     position: relative;
 }
-.searchInput{
+
+.searchInput {
     width: 100%;
     border-radius: 20px;
     padding: 7px 40px;
-    border:solid 2px #f6f6f6;
+    border: solid 2px #f6f6f6;
     transition: border 0.2s ease;
 }
-.searchInput:focus{
-    border:solid 2px #3390ec;
+
+.searchInput:focus {
+    border: solid 2px #3390ec;
     caret-color: #3390ec;
 }
-.searchInput:focus ~.searchIcon *:not(rect){
+
+.searchInput:focus ~ .searchIcon *:not(rect) {
     stroke: #3390ec;
 }
-.searchIcon{
+
+.searchIcon {
     position: absolute;
     left: 30px;
     top: 50%;
     transform: translateY(-50%);
 }
-.searchIcon *:not(rect){
+
+.searchIcon *:not(rect) {
     stroke: #b2b5b7;
     transition: stroke 0.2s ease;
 }
-.clearSearchInput{
+
+.clearSearchInput {
     position: absolute;
     width: 33px;
     height: 33px;
@@ -171,15 +193,32 @@
     background-color: transparent;
     transition: background-color 0.2s ease;
 }
-.clearSearchInput:hover{
-    background-color: rgba(112,117,121,0.08);
+
+.clearSearchInput:hover {
+    background-color: rgba(112, 117, 121, 0.08);
 }
-.clearIcon{
+
+.clearIcon {
     stroke: #b2b5b7;
 }
 
+.newChatButton {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: rgb(51, 144, 236);
+}
+
+.newChatButton:hover {
+    background-color: rgb(74, 149, 214);
+}
+
+.newChatButton svg *:not(rect) {
+    color: #fff;
+}
+
 /*modal*/
-.modalRoot{
+.modalRoot {
     position: absolute;
     top: 0;
     left: 0;
@@ -187,10 +226,12 @@
     height: 100%;
     z-index: 1000;
 }
-.modalContainer{
+
+.modalContainer {
     height: 100%;
 }
-.modal{
+
+.modal {
     position: absolute;
     width: 300px;
     border-radius: 10px;
@@ -199,6 +240,7 @@
     top: 55px;
     right: 15px;
 }
+
 @keyframes modalIn {
     0% {
         transform: scale(0.96);
@@ -209,6 +251,7 @@
         opacity: 1;
     }
 }
+
 @keyframes modalOut {
     0% {
         transform: scale(100%);
@@ -219,26 +262,25 @@
         opacity: 0;
     }
 }
-.modalMenuList{
+
+.modalMenuList {
     display: flex;
     flex-direction: column;
     padding: 8px 0;
     font-size: 16px;
     cursor: pointer;
 }
-.modalMenuItem{
+
+.modalMenuItem {
     padding: 12px 16px;
     display: flex;
     align-items: center;
 }
-.modalMenuItem:hover{
-    background-color: rgb(244,244,245);
+
+.modalMenuItem:hover {
+    background-color: rgb(244, 244, 245);
 }
-.modalMenuItem svg{
+
+.modalMenuItem svg {
     margin-right: 32px;
 }
-
-
-
-
-

@@ -22,19 +22,7 @@ const ChatSettings = (props) => {
     return (
         <>
             {!!selectedChat &&
-            <CSSTransition
-                in={props.settingsIsOpen}
-                timeout={300}
-                classNames={
-                    {
-                        enterActive: style.wrapper_enterActive,
-                        enterDone: style.wrapper_enterDone,
-                        exitActive: style.wrapper_exitActive
-                    }
-                }
-                unmountOnExit
-            >
-                <div className={style.wrapper}>
+                <div className={cn(style.wrapper,{[style.transitionActive]: props.settingsIsOpen})}>
                     <div className={cn(style.header)}>
                         <div className={cn(style.closeButton, {[style.open]: openModal}, style.show)}
                              onClick={() => openModal ? setOpenModal(false) : props.setOpenSettings(false)}>
@@ -150,7 +138,6 @@ const ChatSettings = (props) => {
 
                     {/* <PopupInvite openModal={openModal} setOpenModal={setOpenModal}/>*/}
                 </div>
-            </CSSTransition>
             }
         </>
     );

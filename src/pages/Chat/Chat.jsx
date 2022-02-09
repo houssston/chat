@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {ChatEngine, deleteChat, getChats} from 'react-chat-engine';
 import {useChat} from "../../context/context";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -8,14 +8,15 @@ import style from "./Chat.module.css"
 import ChatSettings from "../../components/ChatSettings/ChatSettings";
 
 const Chat = () => {
-    const {setMemberIsTyping,
+    const {
+        setMemberIsTyping,
         setMembers,
         createNewChat,
         deleteChat,
         chatConfig,
         setMyChats,
         newMessage,
-        } = useChat();
+    } = useChat();
     const [settingsIsOpen, setOpenSettings] = useState(false);
     return (
         <>
@@ -44,7 +45,6 @@ const Chat = () => {
                         console.log("onNewChat");
                         createNewChat(chat);
                     }}
-
                     onAddPerson={(data) => {
                         console.log("onAddPerson");
                         setMembers(data)
@@ -55,16 +55,21 @@ const Chat = () => {
                     }}
 
                     onTyping={(chatId, username) => {
+                        console.log("onTyping");
                         setMemberIsTyping({chatId, username})
                     }}
 
                     onNewMessage={(chatId, message) => {
                         newMessage({chatId, message})
                     }}
+
+                    onEditChat={(chat) => {
+                        console.log('onEditChat');
+                    }}
                 />
                 <Sidebar/>
-                <ChatFeed setOpenSettings={setOpenSettings}/>
-                 <ChatSettings setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
+                <ChatFeed setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
+                <ChatSettings setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
             </div>
             }
         </>
