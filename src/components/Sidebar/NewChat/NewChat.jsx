@@ -17,8 +17,6 @@ const NewChat = (props) => {
     const {
         chatConfig,
         myDetails,
-        setMyChats,
-        getMessages
     } = useChat();
 
     const [channelName, setChannelName] = useState("");
@@ -63,7 +61,7 @@ const NewChat = (props) => {
             props.setSlideSidebar(false)
         });
     };
-    //console.log(myDetails);
+
     return (
         <CSSTransition
             in={props.slideSidebar}

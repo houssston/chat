@@ -3,22 +3,30 @@ import {useChat} from "../../context/context";
 import cn from 'classnames';
 import {fb} from "../../firebase";
 import Modal from "react-responsive-modal";
-import {Camera, Gear, MagnifyingGlass, Pen, SignOut, X} from "phosphor-react";
+import {
+    Camera,
+    DotsThreeOutlineVertical,
+    DotsThreeVertical,
+    Gear, GearSix,
+    MagnifyingGlass,
+    Pen,
+    SignOut,
+    X
+} from "phosphor-react";
 import {chatApi} from "../../api/api";
 import NewChat from "./NewChat/NewChat";
 import ChatList from "./ChatList/ChatList";
-
 import style from "./Sidebar.module.css";
-import RoundButton from "../RoundButton/RoundButton";
-import {addPerson} from "react-chat-engine";
+import RoundButton from "../RoundButton/RoundButton"
 import Avatar from "../Avatar/Avatar";
-import {CSSTransition} from "react-transition-group";
+import {getColorForString} from "generate-colors"
 
 const Sidebar = () => {
     const {
         chatConfig,
         myDetails,
-        setMyDetails
+        setMyDetails,
+        logout
     } = useChat();
     const [openModal, setOpenModal] = useState(false);
     const [slideSidebar, setSlideSidebar] = useState(false);
@@ -56,8 +64,9 @@ const Sidebar = () => {
             )
         }
     };
+
     return (
-        <div className={cn(style.wrapper, style.transition)}>
+        <div className={style.wrapper}>
             <div className={cn(style.main, {[style.main_transitionActive]: slideSidebar})} ref={sidebarRef}>
 
                 <div className={style.header} ref={sidebarHeaderRef}>
@@ -75,10 +84,14 @@ const Sidebar = () => {
                                 : myDetails.username.substring(0, 1).toUpperCase()
                         }
                     </Avatar>
+                    <div className={style.userInfo}>
+                        {(!!myDetails.first_name || !!myDetails.last_name) && myDetails.first_name + " " + myDetails.last_name
+                        }
+                    </div>
 
                     <button className={style.header__btnContainer} onClick={() => setOpenModal(true)}>
-                        <div className={style.btnIcon}></div>
-                        <div className={cn(style.animatedBtnIcon, {[style.animatedBtnIcon_active]: openModal})}></div>
+                        <GearSix size={25} color="#989BA1"/>
+                        <div className={cn(style.animatedBtnIcon, {[style.animatedBtnIcon_active]: openModal})}> </div>
                     </button>
 
                     <Modal open={openModal}
@@ -99,7 +112,10 @@ const Sidebar = () => {
                                 <Gear size={22}/>
                                 Settings
                             </div>
-                            <div className={style.modalMenuItem} onClick={() => fb.auth.signOut()}>
+                            <div className={style.modalMenuItem} onClick={() => {
+                                fb.auth.signOut()
+                                    .then(() => {logout()})
+                            }}>
                                 <SignOut size={22}/>
                                 Sign Out
                             </div>
@@ -109,11 +125,11 @@ const Sidebar = () => {
                 </div>
 
                 <div className={style.searchWrapper}>
-                    <input type="text" className={style.searchInput} placeholder="Search" value={searchField}
+                    <input type="text" className={style.searchInput} placeholder="Search..." value={searchField}
                            onChange={(e) => setSearchField(e.target.value)}/>
                     <MagnifyingGlass size={22} weight="bold" className={style.searchIcon}/>
                     <button type="button" className={style.clearSearchInput} onClick={() => setSearchField("")}>
-                        <X size={15} className={style.clearIcon}/>
+                        <X size={20} className={style.clearIcon}/>
                     </button>
                 </div>
 

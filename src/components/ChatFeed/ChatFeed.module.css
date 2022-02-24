@@ -1,7 +1,8 @@
 .wrapper {
-    background: #a1b68d;
-    background: -webkit-linear-gradient(to bottom right, #eada83, #9ebd95, #eada83);
-    background: linear-gradient(to bottom right, #eada83, #9ebd95, #eada83);
+    background-color: #D1E6FF;
+    z-index: 0;
+    padding: 0 15px 0 0;
+    color: #989BA1;
 }
 
 .inner {
@@ -10,7 +11,7 @@
     width: 100%;
     height: 100%;
     transition: 0.3s ease-in-out;
-    z-index: 1;
+    position: relative;
 }
 
 .inner_transition {
@@ -20,18 +21,18 @@
 .header {
     display: flex;
     background-color: #fff;
-    min-height: 55px;
     align-items: center;
-    padding: 8px 13px 8px 24px;
+    padding: 11px 13px 11px 24px;
     z-index: 1;
-    box-shadow: 0 2px 2px rgba(114, 114, 114, 0.12);
+    margin-bottom: 15px;
 }
 
 .header__tool {
     margin-left: 10px;
     padding: 5px;
     border-radius: 50%;
-    transition: background-color .15s
+    transition: background-color .15s;
+    cursor: pointer;
 }
 
 .header__tool:hover {
@@ -72,7 +73,6 @@
 .status {
     font-size: 14px;
     font-weight: 400;
-    color: #707579;
 }
 
 .whoTyping {
@@ -81,8 +81,6 @@
 
 .whoTyping__list {
     display: flex;
-
-    color: #707579;
 }
 
 .whoTyping__item {
@@ -142,22 +140,18 @@
     z-index: 1000;
 }
 
-.modalOverlay {
-
-}
-
 .modalContainer {
     height: 100%;
+    width: 100%;
 }
 
 .modal {
     position: absolute;
-    width: 300px;
+    width: 210px;
     border-radius: 10px;
     background: #ffffff;
     box-shadow: 0px 2px 8px 1px rgb(0 0 0 / 24%);
-    top: 55px;
-    right: 15px;
+    top: 60px;
 }
 
 @keyframes modalIn {
@@ -187,13 +181,13 @@
     flex-direction: column;
     padding: 8px 0;
     font-size: 16px;
-    cursor: pointer;
 }
 
 .modalMenuItem {
     padding: 12px 16px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .modalMenuItem:hover {
@@ -204,46 +198,47 @@
     margin-right: 32px;
 }
 
+.newMessageWrapper{
+    background-color: #fff;
+}
+
 .newMessageForm {
     width: 100%;
     max-width: 728px;
-    margin: 0 auto 20px;
+    margin: 0 auto 10px;
     position: relative;
     display: flex;
     padding: 0 15px;
 }
 
-.newMessageForm:before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-            90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 2%, rgba(255, 255, 255, 0.4) 98%, rgba(255, 255, 255, 0) 100%);
-}
-
-.messageInputWrapper {
+.messageFieldWrapper {
     position: relative;
     display: flex;
     flex-grow: 1;
     max-width: calc(100% - 64px);
-    box-shadow: 0 1px 2px rgba(114, 114, 114, .25);
-    padding: 5px 25px;
+    padding: 5px 0;
+    border: 2px solid #E2E8F0;
     border-radius: 12px;
-    background-color: #fff;
-
 }
 
 .messageInput {
     width: 100%;
-    padding: 12px 0;
+    padding: 12px 0 12px 10px;
     max-height: 156px;
     line-height: 1.4;
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
+    color: #555758;
+
+}
+.messageInput[placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #96A9BA;
+}
+
+.messageInput[placeholder]:empty:focus:before {
+    content: "";
 }
 
 .messageInput:focus {
@@ -273,13 +268,6 @@
     min-height: 2rem;
     max-height: 12.5rem;
     border-radius: 10px;
-}
-
-.svgTail {
-    position: absolute;
-    right: -11px;
-    bottom: 0;
-    z-index: -1;
 }
 
 .sendMessageButton {

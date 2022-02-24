@@ -12,14 +12,13 @@ export const ChatProvider = ({children, authUser}) => {
     const [chatConfig, setChatConfig] = useState(null);
     const [myChats, setMyChats] = useState(null);
     const [myDetails, setMyDetails] = useState(null);
-
     const [selectedChat, setSelectedChat] = useState(null);
-
     const [typing, setTyping] = useState([]);
     const [membersWhoTyping, setMembersWhoTyping] = useState([]);
+    const [isFetching, setFetching] = useState(true);
 
     const getMessages = async (chatData, page = 1) => {
-
+        setFetching(true);
         let data = await chatApi.getLatestMessages(chatData.id, page * 15, chatConfig);
         setSelectedChat({
             chatData,
@@ -28,11 +27,11 @@ export const ChatProvider = ({children, authUser}) => {
             currentPage: page,
             hasMoreMessage: data.length === page * 15 ? true : false
         });
-
+        setFetching(false);
     };
 
     const createNewChat = (chatData) => {
-        setMyChats([...myChats,chatData]);
+        setMyChats([...myChats, chatData]);
         if (chatData.admin.username === myDetails.username) {
             getMessages(chatData);
         }
@@ -69,8 +68,21 @@ export const ChatProvider = ({children, authUser}) => {
                     }
                     return e;
                 }))
-                : setTyping([...typing, {...selectedChat.chatData.people.find(e => e.person.username === data.username).person, date: moment().format()}])
+                : setTyping([...typing, {
+                    ...selectedChat.chatData.people.find(e => e.person.username === data.username).person,
+                    date: moment().format()
+                }])
         }
+    };
+
+    const logout = () => {
+        setChatConfig(null);
+        setMyChats(null);
+        setMyDetails(null);
+        setSelectedChat(null);
+        /*setMyChats(null);
+        setMyDetails(null);
+        setSelectedChat(null);*/
     };
 
     useEffect(() => {
@@ -90,20 +102,22 @@ export const ChatProvider = ({children, authUser}) => {
             }
             return e;
         }));
-        if(!!selectedChat && data.chatId === selectedChat.chatID){
+        if (!!selectedChat && data.chatId === selectedChat.chatID) {
             setTyping(typing.filter(member => member.username !== data.message.sender_username));
-            if(data.message.sender_username === chatConfig.userName){
-                setSelectedChat({...selectedChat,messages:selectedChat.messages.map(
+            if (data.message.sender_username === chatConfig.userName) {
+                setSelectedChat({
+                    ...selectedChat, messages: selectedChat.messages.map(
                         e => {
                             if (!!e.status) {
                                 return {...data.message}
                             }
                             return e;
                         }
-                    )})
+                    )
+                })
 
-            }else{
-                setSelectedChat({...selectedChat,messages:[...selectedChat.messages,data.message]})
+            } else {
+                setSelectedChat({...selectedChat, messages: [...selectedChat.messages, data.message]})
             }
         }
     };
@@ -111,19 +125,19 @@ export const ChatProvider = ({children, authUser}) => {
     useEffect(() => {
         if (authUser) {
             onSnapshot(doc(fb.firestore, 'chat', `${authUser.uid}`), async (doc) => {
-                const userData = await chatApi.authenticate({
-                    projectID : process.env.REACT_APP_PROJECT_ID,
-                    userName : doc.data().userName,
-                    userSecret : authUser.uid
-                });
-                setMyDetails(userData);
-                setChatConfig({
-                    userSecret: authUser.uid,
-                    userName: doc.data().userName,
-                    projectID: `${process.env.REACT_APP_PROJECT_ID}`,
-
-                });
-
+                if (doc.data()) {
+                    const userData = await chatApi.authenticate({
+                        projectID: process.env.REACT_APP_PROJECT_ID,
+                        userName: doc.data().userName,
+                        userSecret: authUser.uid
+                    });
+                    await setMyDetails(userData);
+                    setChatConfig({
+                        userSecret: authUser.uid,
+                        userName: doc.data().userName,
+                        projectID: `${process.env.REACT_APP_PROJECT_ID}`,
+                    });
+                }
             });
         }
     }, [authUser]);
@@ -134,7 +148,7 @@ export const ChatProvider = ({children, authUser}) => {
             value={{
                 myChats, setMyChats,
                 myDetails, setMyDetails,
-                selectedChat,setSelectedChat,
+                selectedChat, setSelectedChat,
                 membersWhoTyping, setMemberIsTyping,
                 chatConfig,
                 setMembers,
@@ -142,6 +156,7 @@ export const ChatProvider = ({children, authUser}) => {
                 deleteChat,
                 newMessage,
                 getMessages,
+                logout,
             }}
         >
             {children}
@@ -161,12 +176,13 @@ export const useChat = () => {
         deleteChat,
         newMessage,
         getMessages,
+        logout,
     } = useContext(ChatContext);
 
     return {
         myChats, setMyChats,
         myDetails, setMyDetails,
-        selectedChat,setSelectedChat,
+        selectedChat, setSelectedChat,
         setMemberIsTyping,
         membersWhoTyping,
         chatConfig,
@@ -175,6 +191,7 @@ export const useChat = () => {
         deleteChat,
         newMessage,
         getMessages,
+        logout,
     };
 };
 

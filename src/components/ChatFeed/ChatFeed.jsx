@@ -3,7 +3,7 @@ import Bubbles from "./Bubbles/Bubbles";
 import {useChat} from "../../context/context";
 import {chatApi} from "../../api/api";
 import {nanoid} from 'nanoid'
-import {sendMessage} from "react-chat-engine";
+import {deleteChat, leaveChat, removePerson, sendMessage} from "react-chat-engine";
 import style from "./ChatFeed.module.css"
 import Avatar from "../Avatar/Avatar";
 import RoundButton from "../RoundButton/RoundButton";
@@ -11,7 +11,7 @@ import {DotsThreeVertical, PaperPlaneTilt, SignOut, TrashSimple} from "phosphor-
 import cn from "classnames"
 import moment from "moment";
 import Modal from "react-responsive-modal";
-import {fb} from "../../firebase";
+
 
 
 const ChatFeed = (props) => {
@@ -21,6 +21,8 @@ const ChatFeed = (props) => {
         setSelectedChat,
         membersWhoTyping,
         myDetails,
+        setMyChats,
+        myChats
     } = useChat();
     const [message, setMessage] = useState('');
     const [openModal, setOpenModal] = useState(false);
@@ -69,6 +71,11 @@ const ChatFeed = (props) => {
             !!newMessageForm.current && newMessageForm.current.removeEventListener('blur', handlerBlur);
         }
     });
+
+    const deleteChat = () => {
+        //setMyChats()
+        setSelectedChat(null);
+    };
 
     return (
         <div className={cn(style.wrapper)}>
@@ -119,7 +126,6 @@ const ChatFeed = (props) => {
                                                 return value;
 
                                             }, 0)} online</>
-
                                         }
                                         </>
                                     }
@@ -127,8 +133,10 @@ const ChatFeed = (props) => {
                             </div>
                         </div>
 
-                        <div className={style.header__tool} onClick={() => setOpenModal(true)}>
-                            <DotsThreeVertical size={30} color="#707579" weight="bold"/>
+                        <div className={style.header__tool} onClick={() => {
+                            setOpenModal(true)
+                        }}>
+                            <DotsThreeVertical size={30} color="#989BA1" weight="bold"/>
                         </div>
 
                         <Modal open={openModal}
@@ -137,62 +145,67 @@ const ChatFeed = (props) => {
                                classNames={
                                    {
                                        root: style.modalRoot,
-                                       overlay: style. modalOverlay,
                                        modalContainer: style.modalContainer,
                                        modal: style.modal,
                                        modalAnimationIn: style.modalIn,
                                        modalAnimationOut: style.modalOut,
                                    }}
-                               container={headerRef.current}
+                               styles={{
+                                   modal: {left: headerRef.current != null ? headerRef.current.getBoundingClientRect().right - 210 - 15 : 0}
+                               }}
                         >
                             <div className={style.modalMenuList}>
-                                <div className={style.modalMenuItem} onClick={() => fb.auth.signOut()}>
-                                    <SignOut size={22} color="#e53935" />
-                                    Leave Chat
-                                </div>
-                                <div className={style.modalMenuItem} onClick={() => fb.auth.signOut()}>
-                                    <TrashSimple size={22} color="#e53935" />
-                                    Delete and Exit
-                                </div>
+                                {
+                                    selectedChat.chatData.admin.username === myDetails.username
+                                        ? <div className={style.modalMenuItem} onClick={() => {
+                                            deleteChat(chatConfig, selectedChat.chatID);
+                                            setSelectedChat(null);
+                                        }}>
+                                            <TrashSimple size={22} color="#e53935"/>
+                                            Delete and Exit
+                                        </div>
+                                        : <div className={style.modalMenuItem} onClick={() => {
+                                            leaveChat(chatConfig, selectedChat.chatID);
+                                            setSelectedChat(null);
+                                        }}>
+                                            <SignOut size={22} color="#e53935"/>
+                                            Leave Chat
+                                        </div>
+                                }
                             </div>
                         </Modal>
                     </div>
 
                     <Bubbles/>
-                    <div className={style.newMessageForm}>
-                        <div className={style.messageInputWrapper}>
-                            <div contentEditable="true" ref={newMessageForm}
-                                 className={cn(style.messageInput, style.customScroll)}
-                                 onKeyDown={event => {
-                                     if (event.keyCode === 13 && !event.shiftKey) {
+
+                    <div className={style.newMessageWrapper}>
+                        <div className={style.newMessageForm}>
+                            <div className={style.messageFieldWrapper}>
+                                <div contentEditable="true" ref={newMessageForm}
+                                     placeholder="Type a new message..."
+                                     className={cn(style.messageInput, style.customScroll)}
+                                     onKeyDown={event => {
+                                         if (event.keyCode === 13 && !event.shiftKey) {
+                                             event.preventDefault();
+                                             handleSubmit();
+                                         }
+                                     }}
+                                     onPaste={event => {
+                                         let str = event.clipboardData.getData('text').replace(/\r?\n/g, " ");
                                          event.preventDefault();
-                                         handleSubmit();
-                                     }
-                                 }}
-                                 onPaste={event => {
-                                     let str = event.clipboardData.getData('text').replace(/\r?\n/g, " ");
-                                     event.preventDefault();
-                                     document.execCommand('insertText', false, str);
-                                 }}
-                                 onInput={event => {
-                                     setMessage(event.target.innerHTML
-                                         .replace(/^[\s" "]+|[\s" "]+$|^[\s<br>]+|[\s<br>]+$/g, '')
-                                         .replace(/ /g, "@space@").replace(/<br>+|[\n]/g, "@lb@"))
-                                 }}
-                            />
-                            <div className={style.svgTail}>
-                                <svg width="20" height="25" xmlns="http://www.w3.org/2000/svg">
-                                    <g>
-                                        <path
-                                            d="M 0 0 L 9 0 L 9 6 C 10.5 22.5 15.75 22.5 20.25 24.75 C 9 24.75 3 24 0 7.5"
-                                            fill="#FFF"/>
-                                    </g>
-                                </svg>
+                                         document.execCommand('insertText', false, str);
+                                     }}
+                                     onInput={event => {
+                                         setMessage(event.target.innerHTML
+                                             .replace(/^[\s" "]+|[\s" "]+$|^[\s<br>]+|[\s<br>]+$/g, '')
+                                             .replace(/ /g, "@space@").replace(/<br>+|[\n]/g, "@lb@"))
+                                     }}
+                                />
                             </div>
+                            <RoundButton event={handleSubmit} mix={style.sendMessageButton}>
+                                <PaperPlaneTilt size={28} weight="fill"/>
+                            </RoundButton>
                         </div>
-                        <RoundButton event={handleSubmit} mix={style.sendMessageButton}>
-                            <PaperPlaneTilt size={28} weight="fill"/>
-                        </RoundButton>
                     </div>
                 </>
                 }

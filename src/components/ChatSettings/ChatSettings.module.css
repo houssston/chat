@@ -2,7 +2,6 @@
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 2;
     height: 100%;
     background-color: #fff;
     width: 25vw;
@@ -11,6 +10,7 @@
     border-left: 1px solid #dadce0;
     display: flex;
     flex-direction: column;
+    z-index: 1;
 }
 .transitionActive{
     transform: translate3d(0, 0, 0);
@@ -39,17 +39,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 44px;
-    height: 44px;
-    padding: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     transition: 0.3s ease-in-out;
     cursor: pointer;
+}
+.closeButton:hover{
+    background-color: rgba(112, 117, 121, 0.08);
 }
 
 .closeButton__icon {
     height: 1.5px;
     width: 18px;
-    background: #707579;
+    background: #989BA1;
     transition: 0.3s ease-in-out;
     transform: rotate(-45deg);
     z-index: 2;
@@ -92,15 +95,13 @@
 
 .title {
     font-size: 20px;
-    font-weight: 500;
-    transition: .3s ease-in-out;
+    font-weight: 600;
+    transition: 2s ease-in-out;
     white-space: nowrap;
     padding-left: 15px;
-}
-
-.profileTitle {
     z-index: 1;
 }
+
 
 .profileTitle_slideTo_active {
     position: absolute;
@@ -125,6 +126,22 @@
     left: 57px;
     transform: translateX(0);
 }
+
+.editButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+.editButton:hover{
+    background-color: rgba(112, 117, 121, 0.08);
+}
+
 
 .membersTitle {
     transform: translateX(50px);

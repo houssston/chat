@@ -16,6 +16,7 @@ const Chat = () => {
         chatConfig,
         setMyChats,
         newMessage,
+        myDetails
     } = useChat();
     const [settingsIsOpen, setOpenSettings] = useState(false);
     return (
@@ -68,8 +69,9 @@ const Chat = () => {
                     }}
                 />
                 <Sidebar/>
-                <ChatFeed setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
+
                 <ChatSettings setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
+                <ChatFeed setOpenSettings={setOpenSettings} settingsIsOpen={settingsIsOpen}/>
             </div>
             }
         </>

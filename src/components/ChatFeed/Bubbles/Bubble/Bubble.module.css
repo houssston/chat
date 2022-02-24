@@ -5,13 +5,15 @@
 
 .messageItem_fromMe {
     align-self: flex-end;
+    color: #fff;
 }
 
 .messageItem_fromThem {
     align-self: flex-start;
+
 }
 .messageItem_fromThem path{
-    fill: #fff;
+    fill: #E3F6FC;
 }
 
 .senderAvatar {
@@ -29,10 +31,11 @@
 }
 .messageItem_fromThem .content{
     align-items: flex-start;
+    color: #555758;
 }
 
 .message {
-    background-color: #fff;
+    background-color: #E3F6FC;
     border-radius: 12px;
     max-width: 480px;
     word-wrap: break-word;
@@ -44,10 +47,10 @@
     margin-bottom: 5px;
 }
 .messageItem_fromMe .message{
-    background-color: rgb(238,255,222);
+    background-color: #F3BA4A;
 }
 .messageItem_fromMe path {
-    fill: rgb(238,255,222);
+    fill: #F3BA4A;
 }
 
 .senderName {
@@ -77,7 +80,7 @@
     user-select: none;
 }
 .messageItem_fromMe .messageMeta{
-    color: rgb(79,174,78);
+    color: #fff;
 }
 
 .messageItem .svg {

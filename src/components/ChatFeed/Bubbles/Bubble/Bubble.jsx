@@ -7,12 +7,25 @@ import Avatar from "../../../Avatar/Avatar";
 import cn from "classnames";
 import randomColor from "randomcolor";
 import {Check} from "phosphor-react";
+import {getColorForString} from "generate-colors";
 
 const Bubble = ({item}) => {
 
     const {
         myDetails,
     } = useChat();
+
+    const rgb = getColorForString(item[0].sender.username, {
+        brightness: (defaultValue) => {
+            if (defaultValue <= 60) return 60;
+            if (defaultValue >= 90) return 90;
+            return defaultValue
+        },
+        saturation: (defaultValue) => {
+            if (defaultValue <= 60) return 60;
+            return defaultValue
+        },
+    }).join(',');
 
     const [messageFromMe] = useState(myDetails.username === item[0].sender.username);
 
@@ -40,10 +53,7 @@ const Bubble = ({item}) => {
                                 id === 0 && !messageFromMe &&
                                 <div className={style.senderName}
                                      style={{
-                                         color: randomColor({
-                                             luminosity: 'light',
-                                             seed: message.sender.username.charCodeAt(0)
-                                         })
+                                         color:  `rgb(${rgb})`
                                      }}
                                 >
                                     {!!message.sender.first_name || !!message.sender.last_name

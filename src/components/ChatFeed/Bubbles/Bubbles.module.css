@@ -1,10 +1,10 @@
 .scrollable {
     width: 100%;
     height: 100%;
-    margin-bottom: 10px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(90, 90, 90, .3) transparent;
+    background-color: #fff;
 }
 
 .opacity {
@@ -51,22 +51,31 @@
 
 .date {
     margin: 16px 0;
-    display: flex;
-    justify-content: center;
     position: sticky;
     top: 10px;
-    z-index: 1;
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
 }
 
-.date span {
-    padding: 0 8px;
-    background: rgba(90, 110, 70, 0.6);
-    color: #fff;
-    font-weight: 500;
-    font-size: 15px;
-    border-radius: 12px;
-    line-height: 1.7;
+.date:before, .date:after {
+    content: "";
+    position: absolute;
+    width: 40%;
+    height: 1px;
+    background-color: #989BA1;
+    opacity: 0.2;
+    top: 50%;
 }
+
+.date:before {
+    left: 17px;
+}
+
+.date:after {
+    right: 17px;
+}
+
 
 .scrollDown {
     position: absolute;

@@ -1,10 +1,7 @@
 .wrapper {
     width: 25vw;
     display: flex;
-    border-right: 1px solid rgb(218,220,224);
-}
-
-.transition {
+    padding: 0 15px;
     position: relative;
 }
 
@@ -18,19 +15,17 @@
 }
 
 .main_transitionActive {
-    transform: translateX(-100%);
+    transform: translateX(-100%) translateX(-15px);
 }
 
 .header {
-    min-height: 55px;
-    padding: 0 15px;
     display: flex;
     align-items: center;
-
 }
 
 .avatarContainer {
     position: relative;
+    margin: 15px 0;
 }
 
 .avatarEdit {
@@ -64,6 +59,13 @@
     border-radius: 100%;
     border: 3px solid #F8F8F8;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.userInfo {
+    font-size: 16px;
+    color: #555758;
+    font-weight: 500;
+    margin-left: 15px;
 }
 
 .header__btnContainer {
@@ -130,7 +132,7 @@
 }
 
 .animatedBtnIcon_active::after {
-    animation: circleGrow 0.8s linear;
+    animation: circleGrow 0.4s linear;
 }
 
 @keyframes circleGrow {
@@ -148,38 +150,32 @@
 }
 
 .searchWrapper {
-    background-color: #f4f4f5;
-    padding: 10px 20px;
+    background-color: #fff;
     position: relative;
+    padding: 12px 45px;
+    margin-bottom: 15px;
 }
 
 .searchInput {
     width: 100%;
-    border-radius: 20px;
-    padding: 7px 40px;
-    border: solid 2px #f6f6f6;
-    transition: border 0.2s ease;
+
 }
 
-.searchInput:focus {
-    border: solid 2px #3390ec;
-    caret-color: #3390ec;
+.searchInput::placeholder {
+    font-weight: 500;
+    color: #989BA1;
 }
 
-.searchInput:focus ~ .searchIcon *:not(rect) {
-    stroke: #3390ec;
-}
 
 .searchIcon {
     position: absolute;
-    left: 30px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
 }
 
 .searchIcon *:not(rect) {
-    stroke: #b2b5b7;
-    transition: stroke 0.2s ease;
+    stroke: #989BA1;
 }
 
 .clearSearchInput {
@@ -187,19 +183,18 @@
     width: 33px;
     height: 33px;
     border-radius: 50%;
-    right: 26px;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
     background-color: transparent;
-    transition: background-color 0.2s ease;
 }
 
 .clearSearchInput:hover {
     background-color: rgba(112, 117, 121, 0.08);
 }
 
-.clearIcon {
-    stroke: #b2b5b7;
+.clearIcon *:not(rect) {
+    stroke: #989BA1;
 }
 
 .newChatButton {
@@ -229,6 +224,8 @@
 
 .modalContainer {
     height: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .modal {
@@ -238,7 +235,8 @@
     background: #ffffff;
     box-shadow: 0px 2px 8px 1px rgb(0 0 0 / 24%);
     top: 55px;
-    right: 15px;
+
+
 }
 
 @keyframes modalIn {

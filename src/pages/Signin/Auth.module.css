@@ -1,0 +1,128 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+
+.container {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    font-family: Dongle, sans-serif;
+}
+
+.leftSide {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3f6fc;
+}
+
+.background {
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.rightSide {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px;
+}
+
+.rightSideInner {
+    max-width: 420px;
+    width: 100%;
+}
+
+.pageTitle {
+    text-align: center;
+    font-size: 58px;
+    color: #6588DE;
+}
+
+.form {
+
+}
+
+.form__Group {
+    margin-bottom: 25px;
+}
+
+.fieldTitle {
+    padding: 0;
+    line-height: 30px;
+    font-size: 24px;
+    color: #6d7d93;
+}
+
+.field {
+    background-color: #eff2f5;
+    padding: 12px;
+    border: 1px solid transparent;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+}
+
+.field_error {
+    border: 1px solid #d13a3a;
+}
+
+.errorText {
+    color: #d13a3a;
+    font-size: 24px;
+    position: absolute;
+    line-height: 24px;
+}
+
+.serverError{
+    color: #fff;
+    background-color: #d13a3a;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.btnSubmit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6588DE;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    padding: 18px;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 18px;
+    transition: all 0.3s ease-out;
+}
+
+.btnSubmit:hover {
+    background-color: #3a5cd1;
+}
+
+.btnSubmit[disabled]{
+    background-color: #d1d3d4;
+}
+
+.toggleAuth {
+    font-size: 24px;
+    text-align: center;
+}
+
+.authLink{
+    color: #6588DE;
+    text-decoration: underline;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.authLink:hover {
+    color: #3a5cd1;
+
+}

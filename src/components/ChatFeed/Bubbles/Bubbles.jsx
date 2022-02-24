@@ -87,12 +87,10 @@ const Bubbles = () => {
     return (
         <div className={style.scrollable} ref={scrollable}>
             <div className={style.messageList}>
-                {!!selectedChat.messages && groupMessagesByDate(selectedChat.messages).map((a, key) => (
+                {!!selectedChat.messages.length && groupMessagesByDate(selectedChat.messages).map((a, key) => (
                     <div className={style.messageGroupByDate} key={key}>
                         <div className={style.date}>
-                                <span>
-                                    {convertDate.forChatFeed(a.created)}
-                                </span>
+                            {convertDate.forChatFeed(a.created)}
                         </div>
                         {groupMessagesByAuthor(a.message).map((b, keyB) => (
                             <Bubble item={b} key={keyB}/>
@@ -105,7 +103,6 @@ const Bubbles = () => {
                          mix={cn(style.scrollDown, {[style.scrollDown_show]: !hasScrolled})}>
                 <ArrowDown size={28} weight="bold"/>
             </RoundButton>
-
         </div>
     );
 };

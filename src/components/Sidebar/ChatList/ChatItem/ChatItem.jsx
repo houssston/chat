@@ -6,7 +6,7 @@ import {useChat} from "../../../../context/context";
 import Avatar from "../../../Avatar/Avatar";
 
 const ChatItem = ({item}) => {
-    const {selectedChat,getMessages} = useChat();
+    const {selectedChat, getMessages} = useChat();
 
     return (
         <div
@@ -14,25 +14,22 @@ const ChatItem = ({item}) => {
             key={item.id} onClick={() => {
             getMessages(item)
         }}>
-            <div className={style.left}>
-                <Avatar str={item.title} size={`large`}>
+            <div className={style.logo}>
+                <Avatar str={item.title} size={`medium`}>
                     {item.title.substring(0, 1).toUpperCase()}
                 </Avatar>
             </div>
-            <div className={style.right}>
-                <div className={style.chatItemTittle}>
-                    <h3 className={style.tittle__text}>{item.title}</h3>
-                    <div className={style.tittle_details}>
-                        {!!item.last_message.created && convertDate.forSidebar(item.last_message.created)}
-                    </div>
+            <div className={style.chatInfo}>
+                <h3 className={style.chatInfo__title}>{item.title}</h3>
+                {!!item.last_message.sender &&
+                <div className={style.chatInfo__lastMessage}>
+                    <span>{item.last_message.sender.first_name}</span>: {item.last_message.text.replace(/@space@/g, `${'\u00A0'}`).replace(/@lb@/g, `${'\n'}`)}
                 </div>
-                <div className={style.chatItemMessage}>
-                    {!!item.last_message.sender &&
-                    <div className={style.message__text}>
-                        <span>{item.last_message.sender.first_name}</span>: {item.last_message.text.replace(/@space@/g, `${'\u00A0'}`).replace(/@lb@/g, `${'\n'}`)}
-                    </div>
-                    }
-                </div>
+                }
+
+            </div>
+            <div className={style.metadata}>
+                {!!item.last_message.created && convertDate.forSidebar(item.last_message.created)}
             </div>
 
         </div>
