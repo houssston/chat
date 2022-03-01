@@ -29,42 +29,71 @@ const ChatSettings = (props) => {
                         <div className={style.closeButton__icon}></div>
                     </div>
 
-                    <CSSTransition
-                        in={activeTab === "profile"}
-                        timeout={2000}
-                        classNames={
-                            {
-                                exitActive: style.profileTitle_slideTo_active,
-                                exitDone: style.profileTitle_slideTo_done,
-                                enter: style.profileTitle_slideFrom,
-                                enterActive: style.profileTitle_slideFrom_active,
-
-                            }
-                        }
-
-                    >
-                        <h3 className={style.title}>Profile</h3>
-                    </CSSTransition>
-                    {/*<div className={style.editButton} onClick={() => setActiveTab('edit')}>
+                    {/*profile header
+                    <h3 className={cn(style.title,{[style.slideTo]:activeTab !== "profile"})}>Profile</h3>
+                    <div className={cn(style.editButton,{[style.slideTo]:activeTab !== "profile"})} onClick={() => setActiveTab('edit')}>
                         <PencilSimple size={23} color="#989BA1" weight="bold"/>
+                    </div>
+
+                    Add Members header
+                    <div className={cn(style.title,{[style.membersTitle]:activeTab !== "members"})}>
+                        <h3>Add Members</h3>
                     </div>*/}
 
-                    <CSSTransition
-                        in={activeTab === "members"}
-                        timeout={2}
-                        classNames={
-                            {
-                                enterActive: style.membersTitle_enterActive,
-                                enterDone: style.membersTitle_enterDone,
+                    <div className={style.slideFadeWrapper}>
+                        <CSSTransition
+                            in={activeTab === "profile"}
+                            timeout={300}
+                            classNames={
+                                {
+                                    exit: style.toLeft,
+                                    enter: style.returnFromLeft,
+                                    enterActive: style.returnFromLeft_active,
+                                }
                             }
-                        }
-                        unmountOnExit
-                    >
-                        <div className={cn(style.title, style.membersTitle)}>
-                            <h3>Add Members</h3>
-                        </div>
-                    </CSSTransition>
-
+                            unmountOnExit
+                        >
+                            <div className={style.slideFade}>
+                                <h3 className={style.title}>Profile</h3>
+                                <div className={style.editButton}
+                                     onClick={() => setActiveTab('edit')}>
+                                    <PencilSimple size={23} color="#989BA1" weight="bold"/>
+                                </div>
+                            </div>
+                        </CSSTransition>
+                        <CSSTransition
+                            in={activeTab === "edit"}
+                            timeout={300}
+                            classNames={
+                                {
+                                    enter: style.fromRight,
+                                    enterActive: style.fromRight_active,
+                                    exitActive: style.returnToRight_active,
+                                }
+                            }
+                            unmountOnExit
+                        >
+                            <div className={style.slideFade}>
+                                <h3 className={style.title}>Edit</h3>
+                            </div>
+                        </CSSTransition>
+                        <CSSTransition
+                            in={activeTab === "addMembers"}
+                            timeout={300}
+                            classNames={
+                                {
+                                    enter: style.fromRight,
+                                    enterActive: style.fromRight_active,
+                                    exitActive: style.returnToRight_active,
+                                }
+                            }
+                            unmountOnExit
+                        >
+                            <div className={style.slideFade}>
+                                <h3 className={style.title}>Add Members</h3>
+                            </div>
+                        </CSSTransition>
+                    </div>
 
                     {/*<button onClick={() => deleteChat(chatConfig, selectedChat.chatID)}>delete</button>*/}
 
@@ -104,7 +133,7 @@ const ChatSettings = (props) => {
                                     ))}
                                 </div>
                             </div>
-                            <button className={style.addUsersIcon} onClick={() => setActiveTab('members')}
+                            <button className={style.addUsersIcon} onClick={() => setActiveTab('addMembers')}
                                     title="Add users">
                                 <UserPlus size={28}/>
                             </button>
