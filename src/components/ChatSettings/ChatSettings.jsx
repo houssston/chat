@@ -28,18 +28,6 @@ const ChatSettings = (props) => {
                          onClick={() => activeTab !== 'profile' ? setActiveTab('profile') : props.setOpenSettings(false)}>
                         <div className={style.closeButton__icon}></div>
                     </div>
-
-                    {/*profile header
-                    <h3 className={cn(style.title,{[style.slideTo]:activeTab !== "profile"})}>Profile</h3>
-                    <div className={cn(style.editButton,{[style.slideTo]:activeTab !== "profile"})} onClick={() => setActiveTab('edit')}>
-                        <PencilSimple size={23} color="#989BA1" weight="bold"/>
-                    </div>
-
-                    Add Members header
-                    <div className={cn(style.title,{[style.membersTitle]:activeTab !== "members"})}>
-                        <h3>Add Members</h3>
-                    </div>*/}
-
                     <div className={style.slideFadeWrapper}>
                         <CSSTransition
                             in={activeTab === "profile"}
@@ -98,21 +86,21 @@ const ChatSettings = (props) => {
                     {/*<button onClick={() => deleteChat(chatConfig, selectedChat.chatID)}>delete</button>*/}
 
                 </div>
-                <div className={cn(style.content)}>
+                <div className={style.content}>
                     <CSSTransition
                         in={activeTab === "profile"}
                         timeout={300}
                         classNames={
                             {
-                                enter: style.profile_zoom,
-                                enterActive: style.profile_zoomActive,
-                                exitActive: style.profile_unZoomActive,
+                                exit: style.zoomOut,
+                                enter: style.returnFromZoomOut,
+                                enterActive: style.returnFromZoomOut_active,
                             }
                         }
                         unmountOnExit
                     >
-                        <div className={cn(style.contentWrapper)}>
-                            <div className={cn(style.profile, style.scrollable)}>
+                        <div className={style.zoomFade}>
+                            <div className={style.scrollable}>
                                 <div className={style.profilePhoto} style={{
                                     backgroundColor: `${randomColor({
                                         hue: 'orange, yellow, green, blue',
@@ -139,28 +127,44 @@ const ChatSettings = (props) => {
                             </button>
                         </div>
                     </CSSTransition>
-
                     <CSSTransition
-                        in={activeTab === "members"}
+                        in={activeTab === "edit"}
                         timeout={300}
                         classNames={
                             {
-                                enter: style.addMembers_zoom,
-                                enterActive: style.addMembers_zoomActive,
-                                exitActive: style.addMembers_unZoomActive,
+                                enter: style.fromZoom,
+                                enterActive: style.fromZoom_active,
+                                exitActive: style.returnToZoom_active,
                             }
                         }
                         unmountOnExit
                     >
-                        <div className={style.addMembers}>
-                            {/*<input type="text"
-                                   className={style.modal_search_input}
-                                   placeholder={'Search'}
-                                   ref={inputAddMembers}
-                            />*/}
+                        <div className={style.zoomFade}>
+                            <div className={style.scrollable}>
+                                Что такое Lorem Ipsum?
+                                Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
+                            </div>
                         </div>
                     </CSSTransition>
-
+                    <CSSTransition
+                        in={activeTab === "addMembers"}
+                        timeout={300}
+                        classNames={
+                            {
+                                enter: style.fromZoom,
+                                enterActive: style.fromZoom_active,
+                                exitActive: style.returnToZoom_active,
+                            }
+                        }
+                        unmountOnExit
+                    >
+                        <div className={style.zoomFade}>
+                            <div className={style.scrollable}>
+                                Почему он используется?
+                                Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.." Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).
+                            </div>
+                        </div>
+                    </CSSTransition>
                 </div>
 
 

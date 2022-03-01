@@ -95,12 +95,12 @@
     width: 14px;
 }
 
-.slideFadeWrapper{
+.slideFadeWrapper {
     flex: 1;
     position: relative;
 }
 
-.slideFade{
+.slideFade {
     display: flex;
     width: 100%;
     align-items: center;
@@ -108,33 +108,37 @@
     background-color: #fff;
 }
 
-.toLeft{
+.toLeft {
     transform: translate3d(-30px, 0, 0);
     opacity: 0;
     position: absolute;
 }
 
-.returnFromLeft{
+.returnFromLeft {
     transform: translate3d(-30px, 0, 0);
     opacity: 0;
     position: absolute;
 }
-.returnFromLeft_active{
+
+.returnFromLeft_active {
     transform: translate3d(0, 0, 0);
     opacity: 1;
     position: absolute;
 }
-.fromRight{
+
+.fromRight {
     transform: translate3d(30px, 0, 0);
     opacity: 0;
     position: absolute;
 }
-.fromRight_active{
+
+.fromRight_active {
     transform: translate3d(0, 0, 0);
     opacity: 1;
     position: absolute;
 }
-.returnToRight_active{
+
+.returnToRight_active {
     transform: translate3d(30px, 0, 0);
     opacity: 0;
     position: absolute;
@@ -166,29 +170,21 @@
     background-color: rgba(112, 117, 121, 0.08);
 }
 
-/*
-.membersTitle_enterActive {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-.membersTitle_enterDone {
-    transform: translateX(0);
-    opacity: 1;
-}
-*/
-
 .content {
     overflow: hidden;
+    display: flex;
+    flex: 1;
 }
 
-.contentWrapper {
+.zoomFade {
     height: 100%;
+    width: 100%;
     position: relative;
+    transition: .3s ease-in-out;
 }
 
 .scrollable {
-    overflow-y: overlay;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -210,24 +206,42 @@
     border-radius: 10px;
 }
 
-.profile {
-    position: relative;
-}
-
-.profile_zoom {
-    transform: scale(0.9);
+.zoomOut {
+    transform: scale3d(0.9, 0.9, 1);
     opacity: 0;
+    position: absolute;
 }
 
-.profile_zoomActive {
-    transform: scale(1);
+.returnFromZoomOut {
+    transform: scale3d(0.9, 0.9, 1);
+    opacity: 0;
+    position: absolute;
+}
+
+.returnFromZoomOut_active {
+    transform: scale3d(1, 1, 1);
     opacity: 1;
+    position: absolute;
 }
 
-.profile_unZoomActive {
-    transform: scale(0.9);
+.fromZoom{
+    transform: scale3d(1.1, 1.1, 1);
     opacity: 0;
+    position: absolute;
 }
+
+.fromZoom_active{
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+    position: absolute;
+}
+
+.returnToZoom_active{
+    transform: scale3d(1.1, 1.1, 1);
+    opacity: 0;
+    position: absolute;
+}
+
 
 .profilePhoto {
     font-size: 224px;
