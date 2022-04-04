@@ -3,16 +3,13 @@ import style from './Avatar.module.css'
 import cn from "classnames";
 import {getColorForString} from "generate-colors";
 
-const Avatar = ({str, size = `medium`, mix, children}) => {
+const Avatar = ({str, size, mix, children}) => {
     const rgb = getColorForString(str, {
-        brightness: (defaultValue) => {
-            if (defaultValue <= 60) return 60;
-            if (defaultValue >= 90) return 90;
-            return defaultValue
+        brightness: () => {
+            return 45;
         },
-        saturation: (defaultValue) => {
-            if (defaultValue <= 60) return 60;
-            return defaultValue
+        saturation: () => {
+            return 60;
         },
     }).join(',');
 
@@ -24,7 +21,7 @@ const Avatar = ({str, size = `medium`, mix, children}) => {
         )
         }
              style={{
-                 background: `rgb(${rgb})`,
+                 background: `linear-gradient(rgb(255, 255, 255) -125%, rgb(${rgb}))`,
              }}
         >
             {children}

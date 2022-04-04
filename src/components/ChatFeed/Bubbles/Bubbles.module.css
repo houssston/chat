@@ -4,7 +4,7 @@
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(90, 90, 90, .3) transparent;
-    background-color: #fff;
+    margin-bottom: 8px;
 }
 
 .opacity {
@@ -49,33 +49,23 @@
     flex-direction: column;
 }
 
-.date {
-    margin: 16px 0;
+.dateWrapper{
     position: sticky;
     top: 10px;
-    font-weight: 400;
-    font-size: 15px;
     text-align: center;
+    margin: 16px 0;
 }
 
-.date:before, .date:after {
-    content: "";
-    position: absolute;
-    width: 40%;
-    height: 1px;
-    background-color: #989BA1;
-    opacity: 0.2;
-    top: 50%;
+.date {
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 12px;
+    display: inline-block;
+    padding: 0 8px;
+    line-height: 26px;
+    background: rgba(90, 110, 70, 0.6);
+    color: #fff;
 }
-
-.date:before {
-    left: 17px;
-}
-
-.date:after {
-    right: 17px;
-}
-
 
 .scrollDown {
     position: absolute;

@@ -1,4 +1,4 @@
-import "../spinner/spinner.css";
+import "./spinner.css";
 
 export default function Spinner(props) {
     return (

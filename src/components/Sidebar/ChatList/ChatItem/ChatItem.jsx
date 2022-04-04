@@ -3,7 +3,7 @@ import cn from "classnames";
 import style from "./ChatItem.module.css";
 import {convertDate} from "../../../../helpers/dateOutput";
 import {useChat} from "../../../../context/context";
-import Avatar from "../../../Avatar/Avatar";
+import Avatar from "../../../Common/Avatar/Avatar";
 
 const ChatItem = ({item}) => {
     const {selectedChat, getMessages} = useChat();
@@ -15,12 +15,17 @@ const ChatItem = ({item}) => {
             getMessages(item)
         }}>
             <div className={style.logo}>
-                <Avatar str={item.title} size={`medium`}>
+                <Avatar str={item.title} size={'large'}>
                     {item.title.substring(0, 1).toUpperCase()}
                 </Avatar>
             </div>
             <div className={style.chatInfo}>
-                <h3 className={style.chatInfo__title}>{item.title}</h3>
+                <div className={style.chatInfo__title}>
+                    <h3>{item.title}</h3>
+                    <div className={style.metadata}>
+                        {!!item.last_message.created && convertDate.forSidebar(item.last_message.created)}
+                    </div>
+                </div>
                 {!!item.last_message.sender &&
                 <div className={style.chatInfo__lastMessage}>
                     <span>{item.last_message.sender.first_name}</span>: {item.last_message.text.replace(/@space@/g, `${'\u00A0'}`).replace(/@lb@/g, `${'\n'}`)}
@@ -28,9 +33,7 @@ const ChatItem = ({item}) => {
                 }
 
             </div>
-            <div className={style.metadata}>
-                {!!item.last_message.created && convertDate.forSidebar(item.last_message.created)}
-            </div>
+
 
         </div>
     );

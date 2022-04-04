@@ -5,7 +5,6 @@
 
 .messageItem_fromMe {
     align-self: flex-end;
-    color: #fff;
 }
 
 .messageItem_fromThem {
@@ -13,7 +12,7 @@
 
 }
 .messageItem_fromThem path{
-    fill: #E3F6FC;
+    fill: #fff;
 }
 
 .senderAvatar {
@@ -31,38 +30,39 @@
 }
 .messageItem_fromThem .content{
     align-items: flex-start;
-    color: #555758;
 }
 
 .message {
-    background-color: #E3F6FC;
+    background-color: #fff;
     border-radius: 12px;
     max-width: 480px;
     word-wrap: break-word;
     box-shadow: 1px 2px 5px 1px rgba(114,114,114, .3);
-    padding: 5px 8px;
+    padding: 6px 8px;
 }
 
 .message:not(:last-child) {
     margin-bottom: 5px;
 }
 .messageItem_fromMe .message{
-    background-color: #F3BA4A;
+    background-color: rgb(238,255,222);;
 }
 .messageItem_fromMe path {
-    fill: #F3BA4A;
+    fill: rgb(238,255,222);;
 }
 
 .senderName {
     display: flex;
     font-size: 14px;
     font-weight: 500;
+    line-height: 20px;
 }
 
 .messageContent {
     position: relative;
     white-space: pre-wrap;
     display: flow-root;
+    line-height: 21px;
 }
 
 .messageMeta {
@@ -80,7 +80,7 @@
     user-select: none;
 }
 .messageItem_fromMe .messageMeta{
-    color: #fff;
+    color: rgba(79,174,78,1);
 }
 
 .messageItem .svg {

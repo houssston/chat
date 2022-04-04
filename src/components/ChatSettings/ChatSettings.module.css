@@ -7,7 +7,7 @@
     width: 25vw;
     transition: 0.3s ease-in-out;
     transform: translate3d(25vw, 0, 0);
-    border-left: 1px solid #dadce0;
+    border-left: 1px solid rgb(218,220,224);
     display: flex;
     flex-direction: column;
     z-index: 1;
@@ -31,8 +31,7 @@
 
 .header {
     display: flex;
-    height: 56px;
-    padding: 8px 13px;
+    padding: 7px 13px;
     position: relative;
 }
 
@@ -209,45 +208,153 @@
 .zoomOut {
     transform: scale3d(0.9, 0.9, 1);
     opacity: 0;
-    position: absolute;
 }
 
 .returnFromZoomOut {
     transform: scale3d(0.9, 0.9, 1);
     opacity: 0;
-    position: absolute;
 }
 
 .returnFromZoomOut_active {
     transform: scale3d(1, 1, 1);
     opacity: 1;
-    position: absolute;
 }
 
-.fromZoom{
+.fromZoom {
     transform: scale3d(1.1, 1.1, 1);
     opacity: 0;
     position: absolute;
 }
 
-.fromZoom_active{
+.fromZoom_active {
     transform: scale3d(1, 1, 1);
     opacity: 1;
     position: absolute;
 }
 
-.returnToZoom_active{
+.returnToZoom_active {
     transform: scale3d(1.1, 1.1, 1);
     opacity: 0;
     position: absolute;
 }
 
+.profileTitle {
+    position: relative;
+    aspect-ratio: 1/1;
+}
 
 .profilePhoto {
     font-size: 224px;
-    aspect-ratio: 1/1;
     color: #fff;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.chatInfo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100px;
+    background: linear-gradient(
+            0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
+    padding: 8px 20px;
+}
+
+.chatTitle {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 22px;
+    margin-bottom: 4px;
+}
+
+.chatStatus {
+    opacity: .5;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.tabList {
+    box-shadow: 0 2px 2px rgba(114, 114, 114, .16);
+    display: flex;
+    border-top: 10px solid rgb(244,244,245);
+}
+
+.tabItem {
+    padding: 16px 12px;
+    font-weight: 500;
+}
+
+.tabItem_active {
+    color: #4a95d6;
+    position: relative;
+}
+
+.tabItem_active:before {
+    content: "";
+    position: absolute;
+    height: 3px;
+    background-color: #4a95d6;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+}
+
+.membersList {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 16px;
+}
+
+.membersItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 9px;
+    pointer-events: none;
+}
+
+.memberAvatar {
+    margin-right: 8px;
+    position: relative;
+}
+
+.memberStatus {
+    width: 14px;
+    height: 14px;
+    background-color: #0ac630;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.memberInfo {
+    font-weight: 500;
+    color: #555758;
+}
+
+.addMembersButton {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: rgb(51, 144, 236);
+}
+
+.addMembersButton:hover {
+    background-color: rgb(74, 149, 214);
+}
+
+.addMembersButton svg *:not(rect) {
+    color: #fff;
 }
 
 .addUsersIcon {
@@ -259,30 +366,3 @@
     width: 56px;
     height: 56px;
 }
-
-.addMembers {
-    transition: .3s ease-in;
-}
-
-.addMembers_zoom {
-    transform: scale(0.9);
-    opacity: 0;
-}
-
-.addMembers_zoomActive {
-    transform: scale(1);
-    opacity: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.addMembers_unZoomActive {
-    transform: scale(0.9);
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-

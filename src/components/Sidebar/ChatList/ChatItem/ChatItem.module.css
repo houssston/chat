@@ -1,14 +1,15 @@
 .container {
     display: flex;
     width: 100%;
-    padding: 15px 15px 15px 24px;
+    padding: 9px;
+    border-radius: 12px;
     cursor: pointer;
     user-select: none;
     transition: .2s ease-in-out;
 }
 
 .container:not(.container_active):hover {
-    background-color: #e8e8e8;
+    background-color: rgb(244,244,245);
 }
 
 .container_active {
@@ -17,41 +18,49 @@
 }
 
 .logo {
-    margin-right: 15px;
+    margin-right: 8px;
 }
 
 .chatInfo {
     flex: 1;
     overflow: hidden;
-    max-width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     font-size: 14px;
 }
 
-.chatInfo__title {
-    font-size: 18px;
+.chatInfo__title{
+    display: flex;
+
+}
+
+.chatInfo__title h3{
+    font-size: 16px;
+    line-height: 27px;
     font-weight: 500;
     width: auto;
+    max-width: 70%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #989BA1;
+    color: #000;
 }
 
 .chatInfo__lastMessage {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #555758;
-    font-weight: 500;
+    color: rgb(112,117,121);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 27px;
 }
 .chatItem__lastMessage span {
-    color: #52585D;
+    color: #000;
 }
 
-.container_active .chatInfo__title,
+.container_active .chatInfo__title h3,
 .container_active .chatInfo__lastMessage,
 .container_active .chatInfo__lastMessage span,
 .container_active .metadata {
@@ -62,7 +71,8 @@
     margin-left: auto;
     font-size: 12px;
     font-weight: 400;
-    align-self: flex-start;
+    align-self: center;
+    color: #686c72;
 }
 
 

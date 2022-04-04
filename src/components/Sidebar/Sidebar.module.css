@@ -1,7 +1,6 @@
 .wrapper {
     width: 25vw;
     display: flex;
-    padding: 0 15px;
     position: relative;
 }
 
@@ -18,61 +17,16 @@
     transform: translateX(-100%) translateX(-15px);
 }
 
-.header {
+.main__header{
     display: flex;
     align-items: center;
-}
-
-.avatarContainer {
-    position: relative;
-    margin: 15px 0;
-}
-
-.avatarEdit {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background-color: #fff;
-    border-radius: 100%;
-    padding: 2px;
-    width: 19px;
-    height: 19px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid transparent;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-}
-
-.avatarEdit__field {
-    display: none;
-}
-
-.avatarEdit__icon {
-    fill: #707579;
-}
-
-.avatarPreview {
-    width: 45px;
-    height: 45px;
-    border-radius: 100%;
-    border: 3px solid #F8F8F8;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-}
-
-.userInfo {
-    font-size: 16px;
-    color: #555758;
-    font-weight: 500;
-    margin-left: 15px;
+    padding: 6px 13px;
 }
 
 .header__btnContainer {
     position: relative;
     width: 40px;
     height: 40px;
-    margin-left: auto;
     cursor: pointer;
     transition: .15s background-color;
     border-radius: 50%;
@@ -149,23 +103,35 @@
     }
 }
 
-.searchWrapper {
-    background-color: #fff;
+.header__search {
     position: relative;
-    padding: 12px 45px;
-    margin-bottom: 15px;
+    margin-left: 15px;
+    flex: 1;
 }
 
 .searchInput {
     width: 100%;
-
+    padding: 9.5px 45px;
+    background-color: rgb(244,244,245);
+    border: 2px solid rgb(244,244,245);
+    border-radius: 22px;
+    transition: .3s ease-in-out;
 }
 
 .searchInput::placeholder {
-    font-weight: 500;
+    font-weight: 400;
     color: #989BA1;
 }
 
+.searchInput:focus{
+    border: 2px solid rgb(51, 144, 236);
+    background-color: #fff;
+
+}
+
+.searchInput:focus ~ .searchIcon *:not(rect){
+    stroke: rgb(51, 144, 236);
+}
 
 .searchIcon {
     position: absolute;
@@ -176,24 +142,29 @@
 
 .searchIcon *:not(rect) {
     stroke: #989BA1;
+    transition: .3s ease-in-out;
 }
 
-.clearSearchInput {
+.clearSearchBtn {
     position: absolute;
-    width: 33px;
-    height: 33px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    right: 6px;
+    right: 4px;
     top: 50%;
     transform: translateY(-50%);
     background-color: transparent;
+    transition: .3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.clearSearchInput:hover {
+.clearSearchBtn:hover {
     background-color: rgba(112, 117, 121, 0.08);
 }
 
-.clearIcon *:not(rect) {
+.clearSearchIcon *:not(rect) {
     stroke: #989BA1;
 }
 
@@ -224,17 +195,15 @@
 
 .modalContainer {
     height: 100%;
-    display: flex;
-    justify-content: center;
 }
 
 .modal {
     position: absolute;
-    width: 300px;
-    border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0px 2px 8px 1px rgb(0 0 0 / 24%);
+    background: rgb(244, 244, 245);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.15) ;
     top: 55px;
+    left: 5px;
+    right: 5px;
 
 
 }
@@ -259,26 +228,4 @@
         transform: scale(0.96);
         opacity: 0;
     }
-}
-
-.modalMenuList {
-    display: flex;
-    flex-direction: column;
-    padding: 8px 0;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.modalMenuItem {
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-}
-
-.modalMenuItem:hover {
-    background-color: rgb(244, 244, 245);
-}
-
-.modalMenuItem svg {
-    margin-right: 32px;
 }

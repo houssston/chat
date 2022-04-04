@@ -1,8 +1,9 @@
 .wrapper {
-    background-color: #D1E6FF;
     z-index: 0;
-    padding: 0 15px 0 0;
-    color: #989BA1;
+    border-left: 1px solid rgb(218,220,224);
+    background: #a1b68d;
+    background: -webkit-linear-gradient(to bottom right, #eada83, #9ebd95, #eada83);
+    background: linear-gradient(to bottom right, #eada83, #9ebd95, #eada83);
 }
 
 .inner {
@@ -22,9 +23,8 @@
     display: flex;
     background-color: #fff;
     align-items: center;
-    padding: 11px 13px 11px 24px;
+    padding: 7px 13px 7px 24px;
     z-index: 1;
-    margin-bottom: 15px;
 }
 
 .header__tool {
@@ -54,7 +54,6 @@
 .chatInfo {
     display: flex;
     flex-direction: row;
-    align-items: center;
     flex: 1;
     cursor: pointer;
 }
@@ -73,6 +72,7 @@
 .status {
     font-size: 14px;
     font-weight: 400;
+    line-height: 18px;
 }
 
 .whoTyping {
@@ -199,7 +199,7 @@
 }
 
 .newMessageWrapper{
-    background-color: #fff;
+
 }
 
 .newMessageForm {
@@ -211,13 +211,24 @@
     padding: 0 15px;
 }
 
+.newMessageForm::before {
+    content: "";
+    position: absolute;
+    top: -0.5625rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+            90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 2%, rgba(255, 255, 255, 0.4) 98%, rgba(255, 255, 255, 0) 100%);
+}
+
 .messageFieldWrapper {
     position: relative;
     display: flex;
     flex-grow: 1;
     max-width: calc(100% - 64px);
     padding: 5px 0;
-    border: 2px solid #E2E8F0;
+    background-color: #fff;
     border-radius: 12px;
 }
 

@@ -9,9 +9,10 @@ html {
 
 body {
     margin: 0;
-    font-family: 'Gilroy', sans-serif;
+    font-family: 'Roboto', sans-serif;
     height: 100%;
-    background-color: #D1E6FF;
+    background-color: #FFF;
+    line-height: 1;
 }
 
 #root {

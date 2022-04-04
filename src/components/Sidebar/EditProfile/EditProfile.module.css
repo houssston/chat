@@ -1,0 +1,76 @@
+.header{
+    background-color: #3390ec;
+    background-image: url("https://www.transparenttextures.com/patterns/gplay.png");
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 80px;
+}
+.avatarContainer {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    border: 3px solid #F8F8F8;
+}
+
+.avatarEdit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: #707579;
+    border-radius: 100%;
+    padding: 2px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+.avatarEdit__field {
+    display: none;
+}
+
+.avatarEdit__icon {
+    fill: #fff;
+}
+
+.signOutBnt{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.body{
+    padding: 0 25px;
+}
+
+.editProfileList{
+    display: flex;
+    flex-direction: column;
+}
+
+.editProfileItem{
+    margin-bottom: 25px;
+}
+
+.settingsItem__title{
+    font-weight: 500;
+    color: rgb(112, 117, 121);
+    margin-bottom: 30px;
+}
+
+.settingsItem__field{
+    margin-bottom: 25px;
+}
+
+.settingsItem__description{
+    color: rgb(112, 117, 121);
+    font-size: 14px;
+}

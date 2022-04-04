@@ -80,9 +80,6 @@ export const ChatProvider = ({children, authUser}) => {
         setMyChats(null);
         setMyDetails(null);
         setSelectedChat(null);
-        /*setMyChats(null);
-        setMyDetails(null);
-        setSelectedChat(null);*/
     };
 
     useEffect(() => {
@@ -129,9 +126,9 @@ export const ChatProvider = ({children, authUser}) => {
                     const userData = await chatApi.authenticate({
                         projectID: process.env.REACT_APP_PROJECT_ID,
                         userName: doc.data().userName,
-                        userSecret: authUser.uid
+                        userSecret: authUser.uid,
                     });
-                    await setMyDetails(userData);
+                    await setMyDetails({...userData,email: authUser.email});
                     setChatConfig({
                         userSecret: authUser.uid,
                         userName: doc.data().userName,

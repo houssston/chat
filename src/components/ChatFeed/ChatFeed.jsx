@@ -5,8 +5,8 @@ import {chatApi} from "../../api/api";
 import {nanoid} from 'nanoid'
 import {deleteChat, leaveChat, removePerson, sendMessage} from "react-chat-engine";
 import style from "./ChatFeed.module.css"
-import Avatar from "../Avatar/Avatar";
-import RoundButton from "../RoundButton/RoundButton";
+import Avatar from "../Common/Avatar/Avatar";
+import RoundButton from "../Common/RoundButton/RoundButton";
 import {DotsThreeVertical, PaperPlaneTilt, SignOut, TrashSimple} from "phosphor-react";
 import cn from "classnames"
 import moment from "moment";

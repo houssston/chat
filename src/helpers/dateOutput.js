@@ -14,10 +14,10 @@ export const convertDate  = {
         else if(diffWeek){
             return dateCreated.format('ddd');
         }
-        else if(diffMonth){
+        else if(!diffMonth){
             return dateCreated.format('MMM DD');
         }
-        else if(diffYear){
+        else if(!diffYear){
             return dateCreated.format('MMM DD YYYY');
         }
         else{
@@ -42,10 +42,10 @@ export const convertDate  = {
         else if(diffWeek){
             return dateCreated.format('dddd');
         }
-        else if(diffMonth){
+        else if(!diffMonth){
             return dateCreated.format('MMMM DD');
         }
-        else if(diffYear){
+        else if(!diffYear){
             return dateCreated.format('MMMM DD, YYYY');
         }
         else{

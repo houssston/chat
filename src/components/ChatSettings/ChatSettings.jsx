@@ -1,20 +1,24 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {useChat} from "../../context/context";
 import {deleteChat, removePerson} from "react-chat-engine";
-import {PencilSimple, UserPlus, X} from "phosphor-react";
+import {Camera, Pen, PencilSimple, UserMinus, UserPlus, X} from "phosphor-react";
 import cn from 'classnames';
-
 import style from "./ChatSettings.module.css";
 import {CSSTransition} from "react-transition-group";
 import randomColor from "randomcolor";
+import {getColorForString} from "generate-colors";
+import Avatar from "../Common/Avatar/Avatar";
+import RoundButton from "../Common/RoundButton/RoundButton";
 
 const ChatSettings = (props) => {
     const {
         chatConfig,
         selectedChat,
+        myDetails,
     } = useChat();
     const [activeTab, setActiveTab] = useState('profile');
     const inputAddMembers = useRef(null);
+
 
     /*useEffect( () => {
         openModal && inputAddMembers.current.focus();
@@ -43,10 +47,12 @@ const ChatSettings = (props) => {
                         >
                             <div className={style.slideFade}>
                                 <h3 className={style.title}>Profile</h3>
-                                <div className={style.editButton}
-                                     onClick={() => setActiveTab('edit')}>
-                                    <PencilSimple size={23} color="#989BA1" weight="bold"/>
-                                </div>
+                                {selectedChat.chatData.admin.username === myDetails.username &&
+                                    <div className={style.editButton}
+                                         onClick={() => setActiveTab('edit')}>
+                                        <PencilSimple size={23} color="#989BA1" weight="bold"/>
+                                    </div>
+                                }
                             </div>
                         </CSSTransition>
                         <CSSTransition
@@ -82,9 +88,6 @@ const ChatSettings = (props) => {
                             </div>
                         </CSSTransition>
                     </div>
-
-                    {/*<button onClick={() => deleteChat(chatConfig, selectedChat.chatID)}>delete</button>*/}
-
                 </div>
                 <div className={style.content}>
                     <CSSTransition
@@ -101,30 +104,62 @@ const ChatSettings = (props) => {
                     >
                         <div className={style.zoomFade}>
                             <div className={style.scrollable}>
-                                <div className={style.profilePhoto} style={{
-                                    backgroundColor: `${randomColor({
-                                        hue: 'orange, yellow, green, blue',
-                                        luminosity: 'light',
-                                        seed: selectedChat.chatData.title.charCodeAt(0)
-                                    })}`
+                                <div className={style.profileTitle} style={{
+                                    background: `linear-gradient(rgb(255, 255, 255) -125%, rgb(${getColorForString(selectedChat.chatData.title, {
+                                        brightness: () => {
+                                            return 45; 
+                                        },
+                                        saturation: () => {
+                                           return 60;
+                                        },
+                                    }).join(',')})`
                                 }}>
-                                    {selectedChat.chatData.title.substring(0, 1).toUpperCase()}
-                                </div>
-                                <div>{selectedChat.chatData.people.length}members</div>
-                                <div>
-                                    {selectedChat.chatData.people.map((item, id) => (
+                                    <div className={style.profilePhoto} >
+                                        {selectedChat.chatData.title.substring(0, 1).toUpperCase()}
+                                    </div>
+                                    <div className={style.chatInfo}>
+                                        <div className={style.chatTitle}>{selectedChat.chatData.title}</div>
                                         <div
-                                            key={id}>{item.person.first_name}{chatConfig.userName !== item.person.username &&
-                                        <button
-                                            onClick={() => removePerson(chatConfig, selectedChat.chatID, item.person.username)}>__delete</button>}
+                                            className={style.chatStatus}>{selectedChat.chatData.people.length} members
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={style.tabList}>
+                                    <div className={cn(style.tabItem, style.tabItem_active)}>Members</div>
+                                </div>
+                                <div className={style.membersList}>
+                                    {selectedChat.chatData.people.map((item, id) => (
+                                        <div className={style.membersItem} key={id}>
+                                            <Avatar str={item.person.username} size={`medium`} mix={style.memberAvatar}>
+                                                {!!item.person.avatar
+                                                    ? <img src={item.person.avatar} alt="Profile photo"/>
+                                                    : !!item.person.first_name || !!item.person.last_name
+                                                        ? item.person.first_name.substring(0, 1).toUpperCase() + item.person.last_name.substring(0, 1).toUpperCase()
+                                                        : item.person.username.substring(0, 1).toUpperCase()
+                                                }
+                                                {chatConfig.userName !== item.person.username && item.person.is_online &&
+                                                <div className={style.memberStatus}></div>}
+                                            </Avatar>
+                                            <div className={style.memberInfo}>
+                                                {
+                                                    !!item.person.first_name || !!item.person.last_name
+                                                        ? item.person.first_name + " " + item.person.last_name
+                                                        : item.person.username
+                                                }
+                                            </div>
+                                            {/* {chatConfig.userName !== item.person.username &&
+                                                <UserMinus size={20} color="#963c3c" weight="bold" onClick={() => removePerson(chatConfig, selectedChat.chatID, item.person.username)}/>
+
+                                            }*/}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <button className={style.addUsersIcon} onClick={() => setActiveTab('addMembers')}
-                                    title="Add users">
-                                <UserPlus size={28}/>
-                            </button>
+                            <RoundButton event={() => {
+                                setActiveTab('addMembers')
+                            }} mix={style.addMembersButton}>
+                                <UserPlus size={28} />
+                            </RoundButton>
                         </div>
                     </CSSTransition>
                     <CSSTransition
@@ -142,7 +177,14 @@ const ChatSettings = (props) => {
                         <div className={style.zoomFade}>
                             <div className={style.scrollable}>
                                 Что такое Lorem Ipsum?
-                                Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
+                                Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum
+                                является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
+                                безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem
+                                Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных
+                                изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое
+                                время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в
+                                более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах
+                                которых используется Lorem Ipsum.
                             </div>
                         </div>
                     </CSSTransition>
@@ -161,7 +203,15 @@ const ChatSettings = (props) => {
                         <div className={style.zoomFade}>
                             <div className={style.scrollable}>
                                 Почему он используется?
-                                Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.." Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).
+                                Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает
+                                сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее
+                                стандартное заполнение шаблона, а также реальное распределение букв и пробелов в
+                                абзацах, которое не получается при простой дубликации "Здесь ваш текст.. Здесь ваш
+                                текст.. Здесь ваш текст.." Многие программы электронной вёрстки и редакторы HTML
+                                используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым словам
+                                "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются своего
+                                настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые
+                                версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).
                             </div>
                         </div>
                     </CSSTransition>

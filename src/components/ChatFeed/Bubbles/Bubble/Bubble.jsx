@@ -3,9 +3,8 @@ import React, {useState,} from 'react';
 import {convertDate} from "../../../../helpers/dateOutput";
 import {useChat} from "../../../../context/context";
 import style from "./Bubble.module.css"
-import Avatar from "../../../Avatar/Avatar";
+import Avatar from "../../../Common/Avatar/Avatar";
 import cn from "classnames";
-import randomColor from "randomcolor";
 import {Check} from "phosphor-react";
 import {getColorForString} from "generate-colors";
 
@@ -16,14 +15,11 @@ const Bubble = ({item}) => {
     } = useChat();
 
     const rgb = getColorForString(item[0].sender.username, {
-        brightness: (defaultValue) => {
-            if (defaultValue <= 60) return 60;
-            if (defaultValue >= 90) return 90;
-            return defaultValue
+        brightness: () => {
+            return 45;
         },
-        saturation: (defaultValue) => {
-            if (defaultValue <= 60) return 60;
-            return defaultValue
+        saturation: () => {
+            return 60;
         },
     }).join(',');
 

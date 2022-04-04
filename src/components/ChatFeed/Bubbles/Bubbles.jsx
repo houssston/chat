@@ -6,7 +6,7 @@ import Bubble from "./Bubble/Bubble";
 import style from "./Bubbles.module.css"
 import {groupMessagesByAuthor, groupMessagesByDate} from "../../../helpers/groupMessages";
 import {convertDate} from "../../../helpers/dateOutput";
-import RoundButton from "../../RoundButton/RoundButton";
+import RoundButton from "../../Common/RoundButton/RoundButton";
 
 
 const Bubbles = () => {
@@ -89,9 +89,12 @@ const Bubbles = () => {
             <div className={style.messageList}>
                 {!!selectedChat.messages.length && groupMessagesByDate(selectedChat.messages).map((a, key) => (
                     <div className={style.messageGroupByDate} key={key}>
-                        <div className={style.date}>
-                            {convertDate.forChatFeed(a.created)}
+                        <div className={style.dateWrapper}>
+                            <div className={style.date}>
+                                {convertDate.forChatFeed(a.created)}
+                            </div>
                         </div>
+
                         {groupMessagesByAuthor(a.message).map((b, keyB) => (
                             <Bubble item={b} key={keyB}/>
                         ))}

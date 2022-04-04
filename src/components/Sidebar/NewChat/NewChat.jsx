@@ -3,14 +3,14 @@ import cn from "classnames";
 import {ArrowLeft, ArrowRight, Pen, X} from "phosphor-react";
 import {CSSTransition} from "react-transition-group";
 import {chatApi} from "../../../api/api";
-import RoundButton from "../../RoundButton/RoundButton";
+import RoundButton from "../../Common/RoundButton/RoundButton";
 import {addPerson, getChats, newChat} from "react-chat-engine";
 
 import style from "./NewChat.module.css";
 import {useChat} from "../../../context/context";
 import randomColor from "randomcolor";
-import Avatar from "../../Avatar/Avatar";
-import Spinner from "../../spinner/Spinner";
+import Avatar from "../../Common/Avatar/Avatar";
+import Spinner from "../../Common/spinner/Spinner";
 
 
 const NewChat = (props) => {
